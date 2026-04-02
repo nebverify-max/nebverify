@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>NEB Verification</title>
+<title>Certificate Verification</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body {
-  font-family: Arial;
   margin: 0;
+  font-family: Arial;
   background: #f5f5f5;
 }
 
@@ -16,13 +16,12 @@ body {
 .header {
   display: flex;
   align-items: center;
-  padding: 10px;
   background: white;
-  border-bottom: 1px solid #ddd;
+  padding: 10px;
 }
 
 .header img {
-  height: 50px;
+  height: 45px;
   margin-right: 10px;
 }
 
@@ -30,61 +29,38 @@ body {
   font-size: 14px;
 }
 
-/* Blue bar */
+/* Top blue bar */
 .blue-bar {
   background: #1e4fa3;
   color: white;
-  padding: 12px;
-  font-weight: bold;
+  padding: 10px;
 }
 
-/* Main container */
+/* Main */
 .container {
-  padding: 20px;
   text-align: center;
+  padding: 20px;
 }
 
-/* Certificate box */
 .cert-box {
   background: white;
   padding: 15px;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 /* Image */
 .cert-box img {
   width: 100%;
   max-width: 500px;
-  border: 1px solid #eee;
 }
 
-/* Button */
 button {
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 10px 20px;
-  font-size: 16px;
   background: #1e4fa3;
   color: white;
   border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #163d7a;
-}
-
-/* Mobile fix */
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .header img {
-    margin-bottom: 5px;
-  }
 }
 </style>
 
@@ -97,7 +73,7 @@ button:hover {
   <div class="title">
     Government of Nepal<br>
     Ministry of Education, Science and Technology<br>
-    NEB Certificate Verification System
+    Curriculum Development Centre
   </div>
 </div>
 
@@ -106,18 +82,31 @@ button:hover {
 </div>
 
 <div class="container">
-  <h2>Certificate ID: Mohammadjaved</h2>
+  <h2 id="certID"></h2>
 
   <div class="cert-box">
-    <img src="certificates/Mohammadjaved.jpg" alt="Certificate">
-
+    <img id="certImage">
     <br>
-
-    <a href="certificates/Mohammadjaved.pdf" download>
+    <a id="pdfLink" download>
       <button>Download Certificate</button>
     </a>
   </div>
 </div>
+
+<script>
+// URL se ID lena
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// ID show karna
+document.getElementById("certID").innerText = "Certificate ID: " + id;
+
+// Image set karna
+document.getElementById("certImage").src = "certificates/" + id + ".jpg";
+
+// PDF set karna
+document.getElementById("pdfLink").href = "certificates/" + id + ".pdf";
+</script>
 
 </body>
 </html>
