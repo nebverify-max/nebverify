@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NEB Verify</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+
+  <h1>NEB Certificate Verification</h1>
+
+  <div id="result"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if(id){
+      document.getElementById("result").innerHTML = `
+        <h2>Certificate ID: ${id}</h2>
+        <iframe src="pdf/${id}.pdf" width="80%" height="600px"></iframe>
+        <br><br>
+        <a href="pdf/${id}.pdf" download>
+          <button>Download Certificate</button>
+        </a>
+      `;
+    } else {
+      document.getElementById("result").innerHTML = "Invalid QR Code";
+    }
+  </script>
+
+</body>
+</html>
