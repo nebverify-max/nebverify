@@ -1,152 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>NEB Certificate Verification</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-}
-
-/* TOP HEADER */
-.top-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: #fff;
-}
-
-.left-header {
-  display: flex;
-  align-items: center;
-}
-
-.left-header img {
-  height: 50px;
-  margin-right: 10px;
-}
-
-.header-text {
-  font-size: 13px;
-}
-
-.center-title {
-  color: red;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.right-menu {
-  font-size: 14px;
-}
-
-.right-menu a {
-  margin-left: 15px;
-  text-decoration: none;
-  color: black;
-}
-
-/* BLUE BAR */
-.blue-bar {
-  background: #2f5dab;
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-}
-
-/* MAIN BOX */
-.container {
-  padding: 30px;
-  text-align: center;
-}
-
-.cert-box {
-  background: white;
-  padding: 20px;
-  border: 1px solid #ccc;
-  display: inline-block;
-  max-width: 600px;
-}
-
-.cert-box img {
-  width: 100%;
-}
-
-/* BUTTON */
-.download-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #2f5dab;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* QR */
-.qr-box {
-  margin-top: 20px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- HEADER -->
+<!-- TOP HEADER -->
 <div class="top-header">
-  <div class="left-header">
-    <img src="logo.png">
-    <div class="header-text">
-      Government of Nepal<br>
-      Ministry of Education, Science and Technology<br>
-      Curriculum Development Centre, LOE
+
+  <!-- LEFT SIDE -->
+  <div class="left-section">
+    <img src="logo.png" class="logo">
+
+    <div class="gov-text">
+      <div>Government of Nepal</div>
+      <div>Ministry of Education, Science and Technology</div>
+      <div>Curriculum Development Centre, LOE</div>
     </div>
   </div>
 
+  <!-- CENTER TITLE -->
   <div class="center-title">
     Online System for Issuance of Letter of Equivalence
   </div>
 
-  <div class="right-menu">
+  <!-- RIGHT MENU -->
+  <div class="right-section">
     <a href="#">Help</a>
     <a href="#">Notice</a>
     <a href="#">FAQ</a>
-    <a href="#"><b>Login</b></a>
-  </div>
-</div>
-
-<!-- BLUE BAR -->
-<div class="blue-bar">
-  ← Go Back
-</div>
-
-<!-- MAIN -->
-<div class="container">
-
-  <h2>Certificate ID: Mohammadjaved</h2>
-
-  <div class="cert-box">
-
-    <!-- JPG VIEW -->
-    <img src="certificates/Mohammadjaved.jpg">
-
-    <!-- DOWNLOAD PDF -->
-    <br>
-    <a href="certificates/Mohammadjaved.pdf" download>
-      <button class="download-btn">Download Certificate</button>
-    </a>
-
-    <!-- QR CODE -->
-    <div class="qr-box">
-      <p>Scan to Verify</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://nebverify-max.github.io/nebverify/?id=Mohammadjaved">
-    </div>
-
+    <button class="login-btn">🔒 Login</button>
   </div>
 
 </div>
-
-</body>
-</html>
