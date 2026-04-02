@@ -2,6 +2,9 @@
 <html>
 <head>
 <title>NEB Verification</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body {
   font-family: Arial;
@@ -9,11 +12,13 @@ body {
   background: #f5f5f5;
 }
 
+/* Header */
 .header {
   display: flex;
   align-items: center;
   padding: 10px;
   background: white;
+  border-bottom: 1px solid #ddd;
 }
 
 .header img {
@@ -25,35 +30,64 @@ body {
   font-size: 14px;
 }
 
+/* Blue bar */
 .blue-bar {
   background: #1e4fa3;
   color: white;
-  padding: 10px;
+  padding: 12px;
+  font-weight: bold;
 }
 
+/* Main container */
 .container {
   padding: 20px;
   text-align: center;
 }
 
+/* Certificate box */
 .cert-box {
   background: white;
-  padding: 20px;
+  padding: 15px;
   display: inline-block;
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
+/* Image */
 .cert-box img {
   width: 100%;
   max-width: 500px;
+  border: 1px solid #eee;
 }
 
+/* Button */
 button {
   margin-top: 15px;
   padding: 10px 20px;
   font-size: 16px;
+  background: #1e4fa3;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #163d7a;
+}
+
+/* Mobile fix */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header img {
+    margin-bottom: 5px;
+  }
 }
 </style>
+
 </head>
 
 <body>
@@ -62,20 +96,20 @@ button {
   <img src="logo.png">
   <div class="title">
     Government of Nepal<br>
-    Ministry of Education<br>
-    NEB Certificate Verification
+    Ministry of Education, Science and Technology<br>
+    NEB Certificate Verification System
   </div>
 </div>
 
 <div class="blue-bar">
-  Certificate Verification System
+  Online Certificate Verification
 </div>
 
 <div class="container">
   <h2>Certificate ID: Mohammadjaved</h2>
 
   <div class="cert-box">
-    <img src="certificates/Mohammadjaved.jpg">
+    <img src="certificates/Mohammadjaved.jpg" alt="Certificate">
 
     <br>
 
