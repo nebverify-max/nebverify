@@ -53,6 +53,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>राष्ट्रिय परीक्षा बोर्ड | National Examination Board - Nepal</title>
+  <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Serif:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1653,27 +1654,26 @@ function renderResult(s) {
 </script>
 <script>
 function updateNepaliDate() {
-  const nepaliMonths = [
+  const npDate = new NepaliDate(); // today's Nepali date
+
+  const months = [
     "बैशाख","जेठ","असार","साउन","भदौ","असोज",
     "कार्तिक","मंसिर","पौष","माघ","फाल्गुण","चैत"
   ];
 
-  const nepaliDays = [
+  const days = [
     "आइतबार","सोमबार","मंगलबार",
     "बुधबार","बिहीबार","शुक्रबार","शनिबार"
   ];
 
-  const today = new Date();
+  const year = npDate.getYear();
+  const month = months[npDate.getMonth()];
+  const date = npDate.getDate();
+  const day = days[npDate.getDay()];
 
-  const bsYear = today.getFullYear() + 57;
-  const bsMonth = today.getMonth();
-  const bsDate = today.getDate();
+  const finalDate = `${year} ${month} ${date} गते ${day}`;
 
-  const dayName = nepaliDays[today.getDay()];
-
-  const text = bsYear + " " + nepaliMonths[bsMonth] + " " + bsDate + " गते " + dayName;
-
-  document.getElementById("nepali-date").innerText = text;
+  document.getElementById("nepali-date").innerText = finalDate;
 }
 
 updateNepaliDate();
