@@ -1609,18 +1609,17 @@ function verifyResult() {
   errorBox.style.display = 'none';
   resultArea.style.display = 'none';
 
-  fetch("https://script.google.com/macros/s/AKfycbxcn8zK3AAJD9WbGNHuXZD0USpUQtxcD5vbK70evCYvqEXAn60r9HpXwc3pg_flJT4Ufw/exec")
-  .then(res => res.json())
-  .then(data => {
+fetch("https://script.google.com/macros/s/AKfycbxcn8zK3AAJD9WbGNHuXZD0USpUQtxcD5vbK70evCYvqEXAn60r9HpXwc3pg_flJT4Ufw/exec")
+  .then(response => response.text())   // 🔥 change यहाँ
+  .then(text => {
+    const data = JSON.parse(text);     // 🔥 ये add
 
-    // input values clean करो
     const rollVal = roll.toString().trim();
     const yearVal = year.toString().trim();
 
-    // safe match (string compare)
     const student = data.find(s => 
-      String(s.symbol).trim() === rollVal &&
-      String(s.year).trim() === yearVal
+      String(s.symbol) === rollVal &&
+      String(s.year) === yearVal
     );
 
     if (!student) {
@@ -1632,11 +1631,10 @@ function verifyResult() {
     renderResult(student);
     resultArea.style.display = 'block';
     resultArea.scrollIntoView({ behavior: 'smooth' });
-
   })
   .catch(err => {
-    alert("Error connecting to database");
     console.error(err);
+    alert("API blocked or not working");
   });
 }
 
