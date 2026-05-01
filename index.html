@@ -923,7 +923,7 @@ body {
   <!-- RIGHT: Date + NEB Circular Emblem -->
   <div class="header-right">
     <div class="header-date-block">
-      <div class="header-date" id="nepali-date">२०८१ बैशाख १७ गते बिहीबार</div>
+      <div class="header-date" id="nepali-date"></div>
       <a href="#verify-section" class="result-badge" onclick="smoothScroll()">Result</a>
     </div>
 
@@ -1651,6 +1651,32 @@ function renderResult(s) {
   });
 }
 </script>
+<script>
+function updateNepaliDate() {
+  const nepaliMonths = [
+    "बैशाख","जेठ","असार","साउन","भदौ","असोज",
+    "कार्तिक","मंसिर","पौष","माघ","फाल्गुण","चैत"
+  ];
 
+  const nepaliDays = [
+    "आइतबार","सोमबार","मंगलबार",
+    "बुधबार","बिहीबार","शुक्रबार","शनिबार"
+  ];
+
+  const today = new Date();
+
+  const bsYear = today.getFullYear() + 57;
+  const bsMonth = today.getMonth();
+  const bsDate = today.getDate();
+
+  const dayName = nepaliDays[today.getDay()];
+
+  const text = bsYear + " " + nepaliMonths[bsMonth] + " " + bsDate + " गते " + dayName;
+
+  document.getElementById("nepali-date").innerText = text;
+}
+
+updateNepaliDate();
+</script>
 </body>
 </html>
