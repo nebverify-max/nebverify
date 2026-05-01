@@ -1600,21 +1600,31 @@ const DB = [
   }
 ];
 
+<script>
+let roll, year, errorBox, resultArea;
+
+// 🔘 Button call करेगा यही
 function verifyResult() {
-  const roll = document.getElementById('inp-roll').value.trim();
-  const year = document.getElementById('inp-year').value.trim();
-  const errorBox = document.getElementById('error-box');
-  const resultArea = document.getElementById('result-area');
+  roll = document.getElementById('inp-roll').value.trim();
+  year = document.getElementById('inp-year').value.trim();
+
+  errorBox = document.getElementById('error-box');
+  resultArea = document.getElementById('result-area');
 
   errorBox.style.display = 'none';
   resultArea.style.display = 'none';
 
+  loadData(); // 👈 API call
+}
+
+// ✅ JSONP call (CORS bypass)
 function loadData() {
   const script = document.createElement('script');
   script.src = "https://script.google.com/macros/s/AKfycbwgcfynT7DZN_UM0QVW2SwgcWceLhnOQxSpQVxuqAhh9n46e_fV6MwpzCfrAjuidCc6lA/exec?callback=handleData";
   document.body.appendChild(script);
 }
 
+// ✅ API response यहाँ आएगा
 function handleData(data) {
   const student = data.find(s => 
     String(s.symbol) === String(roll) &&
@@ -1629,37 +1639,36 @@ function handleData(data) {
   renderResult(student);
   resultArea.style.display = 'block';
 }
-}
 
+// ✅ Result render
 function renderResult(s) {
   document.querySelector('.info-table').innerHTML = `
-    <tr><td>Symbol No. / Roll No.</td><td>${s.roll}</td></tr>
+    <tr><td>Symbol No. / Roll No.</td><td>${s.symbol}</td></tr>
     <tr><td>Candidate's Name</td><td>${s.name}</td></tr>
-    <tr><td>Mother's Name</td><td>${s.mother}</td></tr>
-    <tr><td>Father's Name</td><td>${s.father}</td></tr>
-    <tr><td>District / School Code</td><td>${s.district}</td></tr>
+    <tr><td>School</td><td>${s.school}</td></tr>
+    <tr><td>GPA XI</td><td>${s.gpa_xi}</td></tr>
+    <tr><td>GPA XII</td><td>${s.gpa_xii}</td></tr>
+    <tr><td>CGPA</td><td>${s.cgpa}</td></tr>
   `;
 
-  let rows = s.subjects.map(sub => `
+  // subjects split
+  const subjects = s.subjects_xii.split("|");
+  const grades = s.grades_xii.split("|");
+
+  let rows = subjects.map((sub, i) => `
     <tr>
-      <td>${sub.name}</td>
-      <td>${sub.pr}</td>
-      <td>${sub.th}</td>
-      <td>${sub.total}</td>
-      <td>${sub.max}</td>
+      <td>${sub}</td>
+      <td>${grades[i] || '-'}</td>
     </tr>
   `).join('');
-  rows += `<tr class="total-row"><td colspan="3">Marks Obtained / Maximum Marks</td><td>${s.obtained}</td><td>${s.maximum}</td></tr>`;
+
   document.getElementById('marks-tbody').innerHTML = rows;
 
-  const pct = ((s.obtained / s.maximum) * 100).toFixed(2);
-  document.getElementById('res-status').innerHTML = `✅ ${s.result}`;
-  document.getElementById('res-div').textContent = s.division;
-  document.getElementById('res-pct').textContent = `Percentage: ${pct}%`;
-  document.getElementById('rh-exam-title').textContent = s.examTitle;
-  document.getElementById('verify-date').textContent = new Date().toLocaleDateString('en-NP', {
-    year: 'numeric', month: 'long', day: 'numeric'
-  });
+  document.getElementById('res-status').innerHTML = `✅ PASS`;
+  document.getElementById('res-div').textContent = `CGPA: ${s.cgpa}`;
+  document.getElementById('res-pct').textContent = `GPA XII: ${s.gpa_xii}`;
+  document.getElementById('rh-exam-title').textContent = "GRADE XII RESULT";
+  document.getElementById('verify-date').textContent = new Date().toLocaleDateString();
 }
 </script>
 
