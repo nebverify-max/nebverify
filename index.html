@@ -1609,33 +1609,26 @@ function verifyResult() {
   errorBox.style.display = 'none';
   resultArea.style.display = 'none';
 
-fetch("https://script.google.com/macros/s/AKfycbyxZaA93jEy0WmF0xDjM14E8dzpQUxaohWIR8Kq7o_UiH28wl7cfi9QEdLAQlzp8GTu/exec")
-  .then(response => response.text())   // 🔥 change यहाँ
-  .then(text => {
-    const data = JSON.parse(text);     // 🔥 ये add
+function loadData() {
+  const script = document.createElement('script');
+  script.src = "https://script.google.com/macros/s/AKfycbwgcfynT7DZN_UM0QVW2SwgcWceLhnOQxSpQVxuqAhh9n46e_fV6MwpzCfrAjuidCc6lA/exec?callback=handleData";
+  document.body.appendChild(script);
+}
 
-    const rollVal = roll.toString().trim();
-    const yearVal = year.toString().trim();
+function handleData(data) {
+  const student = data.find(s => 
+    String(s.symbol) === String(roll) &&
+    String(s.year) === String(year)
+  );
 
-    const student = data.find(s => 
-      String(s.symbol) === rollVal &&
-      String(s.year) === yearVal
-    );
+  if (!student) {
+    errorBox.style.display = 'block';
+    return;
+  }
 
-    if (!student) {
-      errorBox.style.display = 'block';
-      resultArea.style.display = 'none';
-      return;
-    }
-
-    renderResult(student);
-    resultArea.style.display = 'block';
-    resultArea.scrollIntoView({ behavior: 'smooth' });
-  })
-  .catch(err => {
-    console.error(err);
-    alert("API blocked or not working");
-  });
+  renderResult(student);
+  resultArea.style.display = 'block';
+}
 }
 
 function renderResult(s) {
