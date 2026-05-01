@@ -1701,5 +1701,117 @@ function smoothScroll() {
   });
 }
 </script>
-</body>
+<!-- Verification Panel -->
+<section class="verify-section">
+
+  <div class="verify-section-title">
+    🔍 Certificate / Result Verification
+  </div>
+
+  <div class="search-card">
+    <div class="card-body">
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label>Symbol Number</label>
+          <input type="text" id="symbol">
+        </div>
+
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" id="dob">
+        </div>
+
+        <div class="form-group">
+          <label>Exam Year</label>
+          <input type="number" id="year">
+        </div>
+
+        <button class="btn-verify" onclick="verifyData()">
+          VERIFY
+        </button>
+
+      </div>
+
+      <div class="error-box" id="errorBox"></div>
+
+    </div>
+  </div>
+
+  <div id="result-area"></div>
+
+</section>
+          <script>
+
+const students = [
+  {
+    symbol: "8002409",
+    dob: "2007-03-04",
+    year: "2020"
+  }
+];
+
+function verifyData() {
+
+  let symbol = document.getElementById("symbol").value;
+  let dob = document.getElementById("dob").value;
+  let year = document.getElementById("year").value;
+
+  let errorBox = document.getElementById("errorBox");
+
+  if(symbol === "" || dob === "" || year === "") {
+    errorBox.style.display = "block";
+    errorBox.innerText = "Please fill all fields!";
+    return;
+  }
+
+  let found = students.find(s =>
+    s.symbol === symbol &&
+    s.dob === dob &&
+    s.year === year
+  );
+
+  if(found) {
+    errorBox.style.display = "none";
+    showCertificate(symbol);
+  } else {
+    errorBox.style.display = "block";
+    errorBox.innerText = "Record not found!";
+  }
+}
+
+function showCertificate(symbol) {
+
+  let resultArea = document.getElementById("result-area");
+
+  resultArea.style.display = "block";
+
+  resultArea.innerHTML = `
+    <div class="result-sheet">
+
+      <div class="result-body">
+
+        <div class="result-banner">
+          <div class="pass-text">Verified Certificate</div>
+        </div>
+
+        <img src="certificates/${symbol}.jpg" style="width:100%;">
+
+        <br><br>
+
+        <a href="certificates/${symbol}.pdf" target="_blank">
+          <button class="print-btn">Download Certificate</button>
+        </a>
+
+        <button class="print-btn" onclick="window.print()">Print</button>
+
+      </div>
+
+    </div>
+  `;
+}
+
+</script>
+        </body>
 </html>
