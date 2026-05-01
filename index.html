@@ -1614,7 +1614,7 @@ function verifyResult() {
   .then(data => {
 
     const student = data.find(s => 
-      s.roll == roll && s.year == year
+      s.symbol == roll && s.year == year
     );
 
     if (!student) {
