@@ -1613,22 +1613,30 @@ function verifyResult() {
   .then(res => res.json())
   .then(data => {
 
+    // input values clean करो
+    const rollVal = roll.toString().trim();
+    const yearVal = year.toString().trim();
+
+    // safe match (string compare)
     const student = data.find(s => 
-      s.symbol == roll && s.year == year
+      String(s.symbol).trim() === rollVal &&
+      String(s.year).trim() === yearVal
     );
 
     if (!student) {
       errorBox.style.display = 'block';
+      resultArea.style.display = 'none';
       return;
     }
 
     renderResult(student);
     resultArea.style.display = 'block';
     resultArea.scrollIntoView({ behavior: 'smooth' });
+
   })
   .catch(err => {
     alert("Error connecting to database");
-    console.log(err);
+    console.error(err);
   });
 }
 
