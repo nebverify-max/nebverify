@@ -1373,8 +1373,10 @@ body {
           <input type="text" id="symbol">
         </div>
         <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date" id="dob">
+          <label>Date of Birth (B.S.)</label>
+          <input type="text" id="dob" placeholder="YYYY/MM/DD" maxlength="10"
+            oninput="this.value=this.value.replace(/[^0-9\/]/g,'').replace(/(\d{4})(\d)/,'$1/$2').replace(/(\d{4}\/\d{2})(\d)/,'$1/$2')"
+            style="letter-spacing:0.04em;">
         </div>
         <div class="form-group">
           <label>Exam Year</label>
@@ -1565,9 +1567,13 @@ const students = [
   }
 ];
 
+// Populate BS year options (2040–2085)
+(function() {})();
+
 function verifyData() {
   let symbol = document.getElementById("symbol").value;
-  let dob = document.getElementById("dob").value;
+  let dobRaw = document.getElementById("dob").value.trim();
+  let dob = dobRaw.replace(/\//g, "-"); // convert YYYY/MM/DD → YYYY-MM-DD
   let year = document.getElementById("year").value;
   let errorBox = document.getElementById("errorBox");
 
