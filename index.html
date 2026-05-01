@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Examination Board - Nepal</title>
 
+  <!-- Nepali Date Script -->
+  <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      background: white;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-left img {
+      height: 70px;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header-right img {
+      height: 60px;
+    }
+
+    .header-date {
+      margin-top: 5px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .hero img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <div class="header-left">
+      <img src="logo.png">
+      <div>
+        <h2>राष्ट्रिय परीक्षा बोर्ड</h2>
+        <p>सानोठिमी, भक्तपुर</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <img src="logo.png">
+      <div id="nepali-date" class="header-date"></div>
+    </div>
+
+  </div>
+
+  <!-- BIG IMAGE -->
+  <div class="hero">
+    <img src="images/background.png">
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    function updateNepaliDate() {
+      const date = new NepaliDate();
+      document.getElementById("nepali-date").innerText = date.format("YYYY MMMM DD गते dddd");
+    }
+
+    updateNepaliDate();
+  </script>
+
+</body>
+</html>
