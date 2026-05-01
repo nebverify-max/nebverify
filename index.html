@@ -1609,16 +1609,27 @@ function verifyResult() {
   errorBox.style.display = 'none';
   resultArea.style.display = 'none';
 
-  const student = DB.find(s => s.roll === roll && s.year === year);
+  fetch("https://script.google.com/macros/s/AKfycbxcn8zK3AAJD9WbGNHuXZD0USpUQtxcD5vbK70evCYvqEXAn60r9HpXwc3pg_flJT4Ufw/exec")
+  .then(res => res.json())
+  .then(data => {
 
-  if (!student) {
-    errorBox.style.display = 'block';
-    return;
-  }
+    const student = data.find(s => 
+      s.roll == roll && s.year == year
+    );
 
-  renderResult(student);
-  resultArea.style.display = 'block';
-  resultArea.scrollIntoView({ behavior: 'smooth' });
+    if (!student) {
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    renderResult(student);
+    resultArea.style.display = 'block';
+    resultArea.scrollIntoView({ behavior: 'smooth' });
+  })
+  .catch(err => {
+    alert("Error connecting to database");
+    console.log(err);
+  });
 }
 
 function renderResult(s) {
