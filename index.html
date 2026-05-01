@@ -1360,145 +1360,33 @@ body {
   </div>
 </div>
 
-<!-- CERTIFICATE VERIFICATION SECTION -->
-<div class="verify-section" id="verify-section">
-
-  <!-- Breadcrumb -->
-  <div class="breadcrumb">
-    <a href="#">Home</a> <span>›</span>
-    <a href="#">Results</a> <span>›</span>
-    <strong>Certificate / Result Verification</strong>
+<!-- Verification Panel -->
+<section class="verify-section" id="verify-section">
+  <div class="verify-section-title">
+    🔍 Certificate / Result Verification
   </div>
-
   <div class="search-card">
-    <div class="verify-section-title">
-      <span style="background:rgba(255,255,255,0.15);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:0.9rem;">🔍</span>
-      Certificate / Result Verification — प्रमाणपत्र / नतिजा प्रमाणीकरण
-    </div>
     <div class="card-body">
       <div class="form-row">
         <div class="form-group">
-          <label>Symbol Number / Roll No.</label>
-          <input type="text" id="inp-roll" placeholder="e.g. 8002409" maxlength="20">
+          <label>Symbol Number</label>
+          <input type="text" id="symbol">
         </div>
         <div class="form-group">
           <label>Date of Birth</label>
-          <input type="date" id="inp-dob">
+          <input type="date" id="dob">
         </div>
         <div class="form-group">
           <label>Exam Year</label>
-          <input type="text" id="inp-year" placeholder="e.g. 2020" maxlength="4">
+          <input type="number" id="year">
         </div>
-        <button class="btn-verify" onclick="verifyResult()">🔍 VERIFY</button>
+        <button class="btn-verify" onclick="verifyData()">VERIFY</button>
       </div>
-      <p class="hint">
-        📌 <strong>Demo:</strong> Enter Symbol No. <strong>8002409</strong>, any DOB, Year <strong>2020</strong> to see sample result.
-      </p>
-      <div class="error-box" id="error-box">
-        ❌ No record found. Please check your Symbol Number, Date of Birth, and Exam Year and try again.
-      </div>
+      <div class="error-box" id="errorBox"></div>
     </div>
   </div>
-
-  <!-- RESULT AREA -->
-  <div id="result-area">
-    <div class="result-sheet">
-      <div class="result-header">
-        <div class="rh-logos">
-          <div class="rh-logo-box">
-            <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="29" fill="#003893" stroke="#c8a951" stroke-width="2"/>
-              <circle cx="30" cy="30" r="24" fill="none" stroke="#c8a951" stroke-width="1"/>
-              <rect x="15" y="22" width="12" height="16" rx="1" fill="#fff" opacity="0.9"/>
-              <rect x="28" y="22" width="12" height="16" rx="1" fill="#fff" opacity="0.7"/>
-              <line x1="27" y1="22" x2="27" y2="38" stroke="#c8a951" stroke-width="1.5"/>
-              <text x="30" y="47" font-size="6" fill="#c8a951" text-anchor="middle" font-weight="bold" font-family="serif">NEB</text>
-              <text x="20" y="20" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
-              <text x="30" y="17" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
-              <text x="40" y="20" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
-            </svg>
-          </div>
-        </div>
-        <div class="rh-center">
-          <div class="nepali">राष्ट्रिय परीक्षा बोर्ड, नेपाल</div>
-          <h2>National Examination Board, Nepal</h2>
-          <div class="exam-sub" id="rh-exam-title">Grade XII Examination Result — 2020</div>
-        </div>
-        <div class="rh-logos">
-          <div class="rh-logo-box">
-            <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="29" cy="29" r="28" fill="#003893" stroke="#c8a951" stroke-width="2"/>
-              <circle cx="29" cy="29" r="23" fill="none" stroke="#c8a951" stroke-width="0.8"/>
-              <rect x="23" y="26" width="12" height="15" rx="1" fill="#fff" opacity="0.85"/>
-              <polygon points="29,14 22,26 36,26" fill="#fff" opacity="0.9"/>
-              <polygon points="13,32 18,24 23,30 29,20 35,28 40,22 46,32" fill="none" stroke="#c8a951" stroke-width="1.2"/>
-              <text x="29" y="47" font-size="4.5" fill="#c8a951" text-anchor="middle" font-weight="bold" font-family="serif">NEPAL</text>
-              <text x="29" y="52" font-size="3.5" fill="#a8d0ff" text-anchor="middle" font-family="sans-serif">सरकार</text>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="result-body">
-        <div class="status-strip">
-          <span>🗓️ Verification Date: <strong id="verify-date"></strong></span>
-          <span class="verified-badge">✅ VERIFIED RECORD</span>
-          <span>Source: <strong>NEB Official Database</strong></span>
-        </div>
-
-        <div class="section-heading">📋 Candidate Details</div>
-        <table class="info-table">
-          <tr><td>Symbol No. / Roll No.</td><td>8002409</td></tr>
-          <tr><td>Candidate's Name</td><td>BIBEK AGRAHARI</td></tr>
-          <tr><td>Mother's Name</td><td>SUNITA AGRAHARI</td></tr>
-          <tr><td>Father's Name</td><td>GAUTAM PRASAD AGRAHARI</td></tr>
-          <tr><td>District / School Code</td><td>76 / 1034</td></tr>
-        </table>
-
-        <div class="section-heading">📊 Marks Details</div>
-        <table class="marks-table">
-          <thead>
-            <tr>
-              <th>SUBJECT</th>
-              <th>Practical (Pr)</th>
-              <th>Theory (Th)</th>
-              <th>Marks Obtained</th>
-              <th>Maximum Marks</th>
-            </tr>
-          </thead>
-          <tbody id="marks-tbody">
-            <tr><td>NEPALI</td><td>X</td><td>75</td><td>75</td><td>100</td></tr>
-            <tr><td>ENGLISH</td><td>X</td><td>71</td><td>71</td><td>100</td></tr>
-            <tr><td>PHYSICS</td><td>24</td><td>53</td><td>77</td><td>100</td></tr>
-            <tr><td>CHEMISTRY</td><td>21</td><td>52</td><td>73</td><td>100</td></tr>
-            <tr><td>MATHEMATICS</td><td>X</td><td>69</td><td>69</td><td>100</td></tr>
-            <tr><td>BIOLOGY</td><td>20</td><td>58</td><td>78</td><td>100</td></tr>
-            <tr class="total-row"><td colspan="3">Marks Obtained / Maximum Marks</td><td>443</td><td>600</td></tr>
-          </tbody>
-        </table>
-
-        <div class="result-banner">
-          <div class="pass-text" id="res-status">✅ PASS</div>
-          <div class="div-text" id="res-div">FIRST DIVISION</div>
-          <div class="pct-text" id="res-pct">Percentage: 73.83%</div>
-        </div>
-
-        <div class="disclaimer">
-          <h4>⚠️ Important Notice / Disclaimer</h4>
-          <ol>
-            <li>This is a Computer Generated Provisional Score Card. The results published on this portal are for immediate information to examinees only. These cannot be treated as original mark sheets. Original mark sheets are issued by NEB separately.</li>
-            <li>Data provided by National Examination Board (NEB), Sanothimi, Bhaktapur, Nepal.</li>
-            <li>Neither the National Examination Board nor the service provider is responsible for any inadvertent error in the result published on this portal. Students are advised to contact NEB for any discrepancy.</li>
-            <li>For official verification, contact NEB at: <strong>01-6630740</strong> | Email: <strong>info@neb.gov.np</strong></li>
-          </ol>
-        </div>
-
-        <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-      </div>
-    </div>
-  </div>
-
-</div>
+  <div id="result-area"></div>
+</section>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -1573,177 +1461,7 @@ function smoothScroll() {
   setTimeout(() => document.getElementById('verify-section').scrollIntoView({ behavior: 'smooth' }), 50);
 }
 
-// ── Set today's date ──
-document.getElementById('verify-date').textContent = new Date().toLocaleDateString('en-NP', {
-  year: 'numeric', month: 'long', day: 'numeric'
-});
-
-// ── Demo Database ──
-const DB = [
-  {
-    roll: "8002409", year: "2020",
-    name: "BIBEK AGRAHARI",
-    mother: "SUNITA AGRAHARI",
-    father: "GAUTAM PRASAD AGRAHARI",
-    district: "76 / 1034",
-    subjects: [
-      { name: "NEPALI",      pr: "X",  th: 75, total: 75,  max: 100 },
-      { name: "ENGLISH",     pr: "X",  th: 71, total: 71,  max: 100 },
-      { name: "PHYSICS",     pr: 24,   th: 53, total: 77,  max: 100 },
-      { name: "CHEMISTRY",   pr: 21,   th: 52, total: 73,  max: 100 },
-      { name: "MATHEMATICS", pr: "X",  th: 69, total: 69,  max: 100 },
-      { name: "BIOLOGY",     pr: 20,   th: 58, total: 78,  max: 100 },
-    ],
-    obtained: 443, maximum: 600,
-    result: "PASS", division: "FIRST DIVISION",
-    examTitle: "GRADE XII EXAMINATION RESULT — 2020"
-  }
-];
-
-<script>
-let roll, year, errorBox, resultArea;
-
-// 🔘 Button call करेगा यही
-function verifyResult() {
-  roll = document.getElementById('inp-roll').value.trim();
-  year = document.getElementById('inp-year').value.trim();
-
-  errorBox = document.getElementById('error-box');
-  resultArea = document.getElementById('result-area');
-
-  errorBox.style.display = 'none';
-  resultArea.style.display = 'none';
-
-  loadData(); // 👈 API call
-}
-
-// ✅ JSONP call (CORS bypass)
-function loadData() {
-  const script = document.createElement('script');
-  script.src = "https://script.google.com/macros/s/AKfycbwgcfynT7DZN_UM0QVW2SwgcWceLhnOQxSpQVxuqAhh9n46e_fV6MwpzCfrAjuidCc6lA/exec?callback=handleData";
-  document.body.appendChild(script);
-}
-
-// ✅ API response यहाँ आएगा
-function handleData(data) {
-  const student = data.find(s => 
-    String(s.symbol) === String(roll) &&
-    String(s.year) === String(year)
-  );
-
-  if (!student) {
-    errorBox.style.display = 'block';
-    return;
-  }
-
-  renderResult(student);
-  resultArea.style.display = 'block';
-}
-
-// ✅ Result render
-function renderResult(s) {
-  document.querySelector('.info-table').innerHTML = `
-    <tr><td>Symbol No. / Roll No.</td><td>${s.symbol}</td></tr>
-    <tr><td>Candidate's Name</td><td>${s.name}</td></tr>
-    <tr><td>School</td><td>${s.school}</td></tr>
-    <tr><td>GPA XI</td><td>${s.gpa_xi}</td></tr>
-    <tr><td>GPA XII</td><td>${s.gpa_xii}</td></tr>
-    <tr><td>CGPA</td><td>${s.cgpa}</td></tr>
-  `;
-
-  // subjects split
-  const subjects = s.subjects_xii.split("|");
-  const grades = s.grades_xii.split("|");
-
-  let rows = subjects.map((sub, i) => `
-    <tr>
-      <td>${sub}</td>
-      <td>${grades[i] || '-'}</td>
-    </tr>
-  `).join('');
-
-  document.getElementById('marks-tbody').innerHTML = rows;
-
-  document.getElementById('res-status').innerHTML = `✅ PASS`;
-  document.getElementById('res-div').textContent = `CGPA: ${s.cgpa}`;
-  document.getElementById('res-pct').textContent = `GPA XII: ${s.gpa_xii}`;
-  document.getElementById('rh-exam-title').textContent = "GRADE XII RESULT";
-  document.getElementById('verify-date').textContent = new Date().toLocaleDateString();
-}
-</script>
-<script>
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-
-function showSlide(index) {
-  slides.forEach(s => s.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-
-  slides[index].classList.add('active');
-  dots[index].classList.add('active');
-  currentSlide = index;
-}
-
-function changeSlide(n) {
-  let newIndex = (currentSlide + n + slides.length) % slides.length;
-  showSlide(newIndex);
-}
-
-function goSlide(n) {
-  showSlide(n);
-}
-</script>
-          <script>
-function smoothScroll() {
-  document.querySelector("#verify-section").scrollIntoView({
-    behavior: "smooth"
-  });
-}
-</script>
-<!-- Verification Panel -->
-<section class="verify-section">
-
-  <div class="verify-section-title">
-    🔍 Certificate / Result Verification
-  </div>
-
-  <div class="search-card">
-    <div class="card-body">
-
-      <div class="form-row">
-
-        <div class="form-group">
-          <label>Symbol Number</label>
-          <input type="text" id="symbol">
-        </div>
-
-        <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date" id="dob">
-        </div>
-
-        <div class="form-group">
-          <label>Exam Year</label>
-          <input type="number" id="year">
-        </div>
-
-        <button class="btn-verify" onclick="verifyData()">
-          VERIFY
-        </button>
-
-      </div>
-
-      <div class="error-box" id="errorBox"></div>
-
-    </div>
-  </div>
-
-  <div id="result-area"></div>
-
-</section>
-          <script>
-
+// ── Verification ──
 const students = [
   {
     symbol: "8002409",
@@ -1753,11 +1471,9 @@ const students = [
 ];
 
 function verifyData() {
-
   let symbol = document.getElementById("symbol").value;
   let dob = document.getElementById("dob").value;
   let year = document.getElementById("year").value;
-
   let errorBox = document.getElementById("errorBox");
 
   if(symbol === "" || dob === "" || year === "") {
@@ -1782,36 +1498,24 @@ function verifyData() {
 }
 
 function showCertificate(symbol) {
-
   let resultArea = document.getElementById("result-area");
-
   resultArea.style.display = "block";
-
   resultArea.innerHTML = `
     <div class="result-sheet">
-
       <div class="result-body">
-
         <div class="result-banner">
           <div class="pass-text">Verified Certificate</div>
         </div>
-
         <img src="certificates/${symbol}.jpg" style="width:100%;">
-
         <br><br>
-
         <a href="certificates/${symbol}.pdf" target="_blank">
           <button class="print-btn">Download Certificate</button>
         </a>
-
         <button class="print-btn" onclick="window.print()">Print</button>
-
       </div>
-
     </div>
   `;
 }
-
 </script>
-        </body>
+</body>
 </html>
