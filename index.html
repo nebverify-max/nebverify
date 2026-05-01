@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║          NEB CERTIFICATE VERIFICATION — CUSTOMIZATION GUIDE                 ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  🖼️  HOW TO CHANGE LOGOS:                                                   ║
+║  ─────────────────────────────────────────────────────────────────────────  ║
+║  1. LEFT LOGO (Nepal Govt):                                                  ║
+║     Find: <div class="nepal-logo"> in the HTML                               ║
+║     Replace the entire SVG with:                                             ║
+║     <img src="nepal-logo.png" alt="Nepal Govt" style="width:78px">          ║
+║                                                                              ║
+║  2. RIGHT LOGO (NEB Emblem):                                                 ║
+║     Find: <div class="neb-logo"> in the HTML                                 ║
+║     Replace the entire SVG with:                                             ║
+║     <img src="neb-emblem.png" alt="NEB" style="width:88px;height:88px">     ║
+║                                                                              ║
+║  📸  HOW TO CHANGE HERO SLIDES:                                              ║
+║  ─────────────────────────────────────────────────────────────────────────  ║
+║  Option A — Use Real Photos (recommended for GitHub Pages):                 ║
+║  1. Upload your images to your GitHub repo (e.g. /images/ folder)           ║
+║  2. Find each <div class="slide"> block                                      ║
+║  3. Replace the <svg class="slide-svg-bg"> with:                            ║
+║     <img class="slide-svg-bg" src="images/campus.jpg"                       ║
+║          style="object-fit:cover;width:100%;height:100%">                   ║
+║  4. Edit the <div class="slide-content"> text below it                       ║
+║                                                                              ║
+║  Option B — Edit SVG Illustrations:                                          ║
+║  Find "Slide 1", "Slide 2", "Slide 3" comments and edit the SVG shapes      ║
+║                                                                              ║
+║  ➕  HOW TO ADD MORE SLIDES:                                                  ║
+║  1. Copy a full <div class="slide"> ... </div> block                         ║
+║  2. Give it a new id: id="slide-4"                                           ║
+║  3. Add a new dot: <div class="dot" onclick="goSlide(3)"></div>              ║
+║  4. Update JS: change `slides.length` — it's automatic (querySelectorAll)   ║
+║                                                                              ║
+║  🚀  GITHUB PAGES DEPLOYMENT:                                                ║
+║  ─────────────────────────────────────────────────────────────────────────  ║
+║  1. Rename file to: index.html                                               ║
+║  2. Push to GitHub repo                                                      ║
+║  3. Go to repo → Settings → Pages → Source: main branch / root              ║
+║  4. Site will be live at: https://yourusername.github.io/repo-name/          ║
+║  NOTE: Google Fonts will load fine on GitHub Pages (requires internet)       ║
+║                                                                              ║
+║  📝  HOW TO CHANGE NOTICE TICKER TEXT:                                       ║
+║  Find <span class="notice-text"> and edit the text between &nbsp;●&nbsp;    ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>राष्ट्रिय परीक्षा बोर्ड | National Examination Board - Nepal</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Serif:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-dark:  #003893;
+  --blue-mid:   #0051bb;
+  --blue-light: #1a6fd4;
+  --blue-pale:  #ddeeff;
+  --blue-bg:    #f0f5fc;
+  --red:        #dc143c;
+  --white:      #ffffff;
+  --text:       #1a1a2e;
+  --text-light: #4a5568;
+  --border:     #b8d0f0;
+  --gold:       #c8a951;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--blue-bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── TOP UTILITY BAR ── */
+.top-bar {
+  background: var(--blue-dark);
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: #a8c4f0;
+  border-bottom: 1px solid #1a4ea8;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.top-bar-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.top-bar-right { display: flex; align-items: center; gap: 10px; }
+.top-bar a { color: #a8c4f0; text-decoration: none; padding: 2px 6px; border-radius: 2px; }
+.top-bar a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.top-bar-divider { color: #2a4ea0; }
+.top-bar-icon { font-size: 0.8rem; }
+.social-links { display: flex; gap: 4px; }
+.social-links a {
+  width: 22px; height: 22px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700;
+  color: #a8c4f0;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.social-links a:hover { background: rgba(255,255,255,0.25); color: #fff; }
+.lang-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #cce0ff;
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.22); }
+
+/* ── MAIN HEADER — WHITE THEME (matching neb.gov.np) ── */
+.site-header {
+  background: #ffffff;
+  padding: 10px 20px 0 20px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  border-bottom: 4px solid var(--blue-mid);
+  position: relative;
+  overflow: hidden;
+  gap: 0;
+  min-height: 90px;
+}
+
+/* Faint Himalaya watermark in header background */
+.site-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpolygon points='0,120 0,80 120,30 240,70 360,20 480,60 600,10 720,50 840,15 960,55 1080,20 1200,50 1200,120' fill='%23003893' opacity='0.04'/%3E%3Cpolygon points='0,120 0,90 150,55 300,80 450,40 600,70 750,35 900,65 1050,40 1200,60 1200,120' fill='%23003893' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header-left { display: flex; align-items: center; gap: 14px; z-index: 1; padding-bottom: 10px; }
+.header-right { display: flex; align-items: center; gap: 0; z-index: 1; }
+
+/* Nepal Govt flag/emblem logo — left side */
+.nepal-logo {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+.nepal-logo svg { width: 78px; height: 78px; }
+
+/* NEB circular emblem — far right */
+.neb-logo {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: none;
+  margin-right: 4px;
+}
+.neb-logo svg { width: 88px; height: 88px; }
+
+.header-center {
+  flex: 1; text-align: left; padding: 8px 16px 8px 8px; z-index: 1;
+}
+.header-center .gov-line {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  color: #333;
+  font-size: 0.82rem;
+  margin-bottom: 1px;
+  letter-spacing: 0.01em;
+}
+.header-center .nepali-main {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  color: var(--red);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+.header-center .eng-main {
+  display: none; /* hidden on white theme — Nepali is prominent */
+}
+.header-center .location-line {
+  color: #555;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  letter-spacing: 0.01em;
+}
+
+/* Date line — right side in header, above NEB logo */
+.header-date-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  padding-right: 12px;
+  z-index: 1;
+}
+.header-date {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: 0.82rem;
+  color: #444;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+/* Result badge */
+.result-badge {
+  background: var(--blue-mid);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 7px 16px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background 0.2s;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,56,147,0.25);
+}
+.result-badge::before { content: '▶'; font-size: 0.6rem; }
+.result-badge:hover { background: var(--blue-dark); }
+
+/* ── NAV BAR ── */
+.nav-bar {
+  background: var(--blue-mid);
+  padding: 0 16px;
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 2px solid #003280;
+  scrollbar-width: none;
+  align-items: stretch;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+.nav-item { position: relative; display: flex; }
+.nav-bar a {
+  color: #e0eeff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0 14px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 42px;
+}
+.nav-bar a:hover { color: #fff; background: rgba(255,255,255,0.1); border-bottom-color: rgba(255,255,255,0.5); }
+.nav-bar a.active { color: #fff; background: rgba(0,0,0,0.18); }
+.nav-bar a .arrow { font-size: 0.55rem; opacity: 0.75; }
+.nav-home-icon { font-size: 0.95rem; }
+/* Result button in nav */
+.nav-result-btn {
+  background: var(--blue-dark);
+  color: #fff !important;
+  border: 2px solid rgba(255,255,255,0.3) !important;
+  border-radius: 4px !important;
+  margin: 6px 0 6px 8px !important;
+  padding: 0 14px !important;
+  height: 30px !important;
+  font-weight: 700 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.04em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+/* ── NOTICE TICKER ── */
+.notice-bar {
+  background: var(--blue-pale);
+  border-bottom: 1px solid var(--border);
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+.notice-label {
+  background: var(--red);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  letter-spacing: 0.07em;
+  flex-shrink: 0;
+}
+.ticker-wrap { overflow: hidden; flex: 1; }
+.notice-text {
+  font-size: 0.78rem;
+  color: var(--blue-dark);
+  white-space: nowrap;
+  display: inline-block;
+  animation: ticker 30s linear infinite;
+}
+.notice-text a { color: var(--blue-dark); text-decoration: underline; }
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ── MAIN CONTENT LAYOUT ── */
+.main-content {
+  display: flex;
+  gap: 0;
+  min-height: 400px;
+}
+
+/* ── HERO SLIDER ── */
+.hero-section {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  background: #0a1f5e;
+}
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: flex; align-items: flex-end;
+}
+.slide.active { opacity: 1; z-index: 1; }
+.slide-bg {
+  position: absolute; inset: 0;
+  object-fit: cover; width: 100%; height: 100%;
+}
+.slide-content {
+  position: relative; z-index: 2;
+  padding: 24px 28px;
+  background: linear-gradient(to top, rgba(0,20,80,0.85) 0%, transparent 100%);
+  width: 100%;
+}
+.slide-content h2 {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  color: #fff;
+  font-size: 1.4rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  margin-bottom: 6px;
+}
+.slide-content p {
+  color: #a8c8f0;
+  font-size: 0.8rem;
+}
+
+/* Slider arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0,56,147,0.6);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.slider-arrow:hover { background: rgba(0,56,147,0.9); }
+.slider-prev { left: 10px; }
+.slider-next { right: 10px; }
+
+/* Slider dots */
+.slider-dots {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  z-index: 10;
+  display: flex; gap: 6px;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.dot.active { background: var(--gold); }
+
+/* Building/campus SVG slides */
+.slide-svg-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+
+/* ── ONLINE SERVICES SIDEBAR ── */
+.services-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background: var(--white);
+  border-left: 1px solid var(--border);
+}
+.services-title {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+  color: var(--white);
+  font-family: 'Noto Serif', serif;
+  font-size: 1.1rem;
+  padding: 14px 20px;
+  text-align: center;
+  letter-spacing: 0.03em;
+  border-bottom: 3px solid var(--red);
+}
+.services-nepali {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: 1.3rem;
+  display: block;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.service-item {
+  background: var(--white);
+  padding: 18px 8px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+  color: var(--text);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.service-item:hover { background: var(--blue-pale); }
+.service-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+  font-size: 1.4rem;
+}
+.service-icon.orange { background: #fff3e0; }
+.service-icon.blue   { background: #e3f0ff; }
+.service-icon.purple { background: #f0e8ff; }
+.service-icon.green  { background: #e6f4ea; }
+.service-icon.teal   { background: #e0f5f5; }
+.service-icon.red    { background: #fff0f0; }
+.service-label {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  line-height: 1.3;
+  font-weight: 600;
+}
+.service-label .nepali {
+  font-family: 'Tiro Devanagari Hindi', serif;
+  font-size: 0.8rem;
+  color: var(--text);
+  display: block;
+}
+
+/* ── NOTICES & UPDATES SECTION ── */
+.notices-section {
+  display: flex;
+  gap: 16px;
+  padding: 16px 16px 0;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.notices-col {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.notices-col-header {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+  color: #fff;
+  padding: 9px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 2px solid var(--red);
+}
+.notice-list { padding: 0; }
+.notice-item {
+  padding: 9px 14px;
+  border-bottom: 1px solid #eef3fb;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--text);
+  display: flex; gap: 8px; align-items: flex-start;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.notice-item:hover { background: var(--blue-pale); }
+.notice-item:last-child { border-bottom: none; }
+.notice-bullet { color: var(--red); font-size: 0.6rem; margin-top: 5px; flex-shrink: 0; }
+.notice-date {
+  font-size: 0.65rem;
+  color: #888;
+  margin-top: 2px;
+}
+.new-badge {
+  background: var(--red);
+  color: #fff;
+  font-size: 0.55rem;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ── VERIFICATION SECTION ── */
+.verify-section {
+  background: var(--white);
+  border-top: 3px solid var(--blue-mid);
+  padding: 20px 16px;
+  margin-top: 0;
+}
+.verify-section-title {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+  color: #fff;
+  padding: 11px 20px;
+  font-family: 'Noto Serif', serif;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 3px solid var(--red);
+  border-radius: 4px 4px 0 0;
+  margin: 0 0 0 0;
+}
+.search-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(0,56,147,0.1);
+  margin: 0 0 20px 0;
+}
+.card-body { padding: 20px; }
+
+.form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+.form-group {
+  flex: 1;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--blue-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.form-group input, .form-group select {
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: var(--blue-bg);
+  color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--blue-light);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(26,111,212,0.12);
+}
+.btn-verify {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.06em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 42px;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(0,56,147,0.3);
+}
+.btn-verify:hover {
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+  box-shadow: 0 5px 15px rgba(0,56,147,0.4);
+  transform: translateY(-1px);
+}
+.hint {
+  font-size: 0.75rem; color: #888; margin-top: 8px;
+  background: var(--blue-pale); padding: 7px 12px;
+  border-radius: 4px; border-left: 3px solid var(--blue-light);
+}
+.hint strong { color: var(--blue-dark); }
+.error-box {
+  display: none;
+  background: #fff5f5; border: 1px solid #feb2b2;
+  color: #c53030; border-radius: 4px;
+  padding: 10px 16px; margin-top: 14px;
+  font-size: 0.86rem; border-left: 4px solid var(--red);
+}
+
+/* ── RESULT AREA ── */
+#result-area { display: none; margin-top: 24px; }
+.result-sheet {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,56,147,0.12);
+}
+.result-header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 5px solid var(--red);
+  gap: 16px;
+}
+.rh-logos { display: flex; align-items: center; gap: 14px; }
+.rh-logo-box {
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 3px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+.rh-logo-box svg { width: 56px; height: 56px; }
+.rh-center { flex: 1; text-align: center; padding: 0 16px; }
+.rh-center .nepali { font-family: 'Tiro Devanagari Hindi', serif; color: #a8d0ff; font-size: 0.9rem; margin-bottom: 4px; }
+.rh-center h2 { font-family: 'Noto Serif', serif; color: #fff; font-size: 1.2rem; line-height: 1.25; }
+.rh-center .exam-sub { color: #a8d0ff; font-size: 0.78rem; letter-spacing: 0.06em; margin-top: 5px; text-transform: uppercase; }
+
+.result-body { padding: 24px 28px; }
+.status-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--blue-pale); border: 1px solid var(--border);
+  border-radius: 4px; padding: 10px 16px;
+  margin-bottom: 20px; font-size: 0.8rem; color: var(--blue-dark);
+}
+.status-strip .verified-badge {
+  background: #e6f4ea; color: #276221;
+  padding: 4px 12px; border-radius: 20px;
+  font-weight: 700; font-size: 0.78rem;
+  border: 1px solid #a3d9a5;
+}
+.section-heading {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+  color: #fff; padding: 8px 16px;
+  font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.1em; margin-bottom: 0;
+  text-transform: uppercase;
+}
+.info-table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 20px; border: 1px solid var(--border);
+}
+.info-table tr { border-bottom: 1px solid #dde8f8; }
+.info-table tr:last-child { border-bottom: none; }
+.info-table tr:nth-child(even) td { background: var(--blue-pale); }
+.info-table td { padding: 9px 16px; font-size: 0.88rem; }
+.info-table td:first-child { color: var(--text-light); width: 38%; }
+.info-table td:last-child { font-weight: 700; color: var(--blue-dark); }
+.marks-table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 20px; border: 1px solid var(--border);
+}
+.marks-table th {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+  color: #fff; padding: 10px 14px;
+  font-size: 0.78rem; letter-spacing: 0.05em;
+  text-align: left; font-weight: 700;
+}
+.marks-table th:not(:first-child) { text-align: center; }
+.marks-table td {
+  padding: 9px 14px; font-size: 0.87rem;
+  border-bottom: 1px solid #dde8f8; text-align: center;
+}
+.marks-table td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+.marks-table tr:nth-child(even) td { background: var(--blue-pale); }
+.marks-table tr.total-row td {
+  background: var(--blue-dark); color: #fff;
+  font-weight: 700; border-top: 2px solid var(--blue-dark); font-size: 0.9rem;
+}
+.result-banner {
+  text-align: center; padding: 18px;
+  border: 2px solid var(--blue-light);
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e8f0fe, var(--blue-pale));
+  margin-bottom: 20px;
+}
+.result-banner .pass-text { font-family: 'Noto Serif', serif; font-size: 1.6rem; color: #276221; font-weight: 700; }
+.result-banner .div-text { font-size: 1rem; color: var(--blue-dark); font-weight: 700; margin-top: 4px; letter-spacing: 0.04em; }
+.result-banner .pct-text { font-size: 0.88rem; color: var(--text-light); margin-top: 4px; }
+.disclaimer {
+  background: #f7f9ff; border: 1px solid var(--border);
+  border-radius: 4px; padding: 16px 18px;
+  font-size: 0.75rem; color: #555;
+  line-height: 1.7; border-left: 4px solid var(--blue-mid);
+}
+.disclaimer h4 { font-size: 0.8rem; color: var(--blue-dark); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; }
+.disclaimer ol { padding-left: 18px; }
+.disclaimer li { margin-bottom: 6px; }
+.print-btn {
+  display: block; margin: 18px auto 0;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+  color: #fff; border: none; padding: 11px 36px;
+  font-size: 0.88rem; font-weight: 700; font-family: inherit;
+  border-radius: 4px; cursor: pointer; letter-spacing: 0.06em;
+  transition: all 0.2s;
+  box-shadow: 0 3px 10px rgba(0,56,147,0.25);
+}
+.print-btn:hover {
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--blue-dark);
+  color: #7aaad8;
+  padding: 0;
+  margin-top: 0;
+  border-top: 4px solid var(--red);
+}
+.footer-top {
+  display: flex; gap: 0;
+  border-bottom: 1px solid #1a3a8a;
+}
+.footer-col {
+  flex: 1;
+  padding: 20px 20px;
+  border-right: 1px solid #1a3a8a;
+}
+.footer-col:last-child { border-right: none; }
+.footer-col h4 {
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2a4a9a;
+}
+.footer-col p, .footer-col a {
+  font-size: 0.74rem; line-height: 1.8;
+  color: #7aaad8; display: block;
+  text-decoration: none;
+}
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  text-align: center; padding: 12px 20px;
+  font-size: 0.7rem; color: #4a7ab8;
+}
+.footer-bottom strong { color: #7aaad8; }
+
+/* ── BREADCRUMB ── */
+.breadcrumb {
+  font-size: 0.75rem; color: var(--text-light);
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 5px;
+  background: #f8faff;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--blue-light); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .main-content { flex-direction: column; }
+  .services-sidebar { width: 100%; border-left: none; border-top: 1px solid var(--border); }
+  .hero-section { min-height: 250px; }
+  .notices-section { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .header-center .nepali-main { font-size: 1.4rem; }
+  .header-right { display: none; }
+  .form-row { flex-direction: column; }
+  .result-body { padding: 14px; }
+  .result-header { flex-direction: column; align-items: center; text-align: center; }
+  .status-strip { flex-direction: column; gap: 6px; }
+  .footer-top { flex-direction: column; }
+  .footer-col { border-right: none; border-bottom: 1px solid #1a3a8a; padding: 14px 20px; }
+}
+
+@media print {
+  .site-header, .top-bar, .nav-bar, .notice-bar,
+  .main-content, .notices-section, .verify-section .search-card,
+  .print-btn, .breadcrumb, .site-footer, .verify-section-title { display: none !important; }
+  #result-area { display: block !important; }
+  body { background: #fff; }
+  .result-sheet { box-shadow: none; border: 1px solid #ccc; }
+  .verify-section { padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP UTILITY BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span>📋 <a href="#">वार्षिक कार्यतालिका</a></span>
+    <span class="top-bar-divider">|</span>
+    <span>🗂️ <a href="#">अभिलेखालय</a></span>
+    <span class="top-bar-divider">|</span>
+    <span>🗺️ <a href="#">साइट म्याप</a></span>
+    <span class="top-bar-divider">|</span>
+    <span>🏢 <a href="#">अन्य कार्यालयहरु</a></span>
+    <span class="top-bar-divider">|</span>
+    <span>📝 <a href="#">Online Application</a></span>
+    <span class="top-bar-divider">|</span>
+    <span>📞 (+977)-01-6630848 · 016630747</span>
+    <span class="top-bar-divider">|</span>
+    <span>✉️ info@neb.gov.np</span>
+  </div>
+  <div class="top-bar-right">
+    <button class="lang-btn">EN</button>
+    <button class="lang-btn">ने</button>
+    <div class="social-links">
+      <a href="#" title="Twitter">𝕏</a>
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="Location">📍</a>
+      <a href="#" title="Email">✉</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN HEADER — WHITE THEME -->
+<header class="site-header">
+
+  <!-- LEFT: Nepal Govt Flag Logo -->
+  <div class="header-left">
+    <!-- ╔══════════════════════════════════════════════════╗
+         ║  LOGO CHANGE GUIDE — LEFT SIDE                  ║
+         ║  To use a real image instead of this SVG:       ║
+         ║  Replace the entire <div class="nepal-logo">    ║
+         ║  block with:                                    ║
+         ║  <img src="nepal-govt-logo.png"                 ║
+         ║       alt="Nepal Govt" style="width:80px">      ║
+         ╚══════════════════════════════════════════════════╝ -->
+    <img src="images/logo-left.png" style="width:70px;">
+      <!-- Nepal Government Emblem — simplified SVG representation -->
+      <!-- Replace with actual <img src="..."> tag if you have the real logo file -->
+      <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="50" cy="52" r="46" fill="none" stroke="#8B0000" stroke-width="2.5"/>
+        <circle cx="50" cy="52" r="40" fill="none" stroke="#8B0000" stroke-width="1"/>
+        <!-- Moon symbol top -->
+        <path d="M 38,20 A 14,14 0 0,1 62,20" fill="none" stroke="#8B0000" stroke-width="2"/>
+        <!-- Sun/circular rays -->
+        <circle cx="50" cy="18" r="5" fill="#cc0000"/>
+        <line x1="50" y1="10" x2="50" y2="13" stroke="#cc0000" stroke-width="1.5"/>
+        <line x1="44" y1="12" x2="46" y2="14.5" stroke="#cc0000" stroke-width="1.5"/>
+        <line x1="56" y1="12" x2="54" y2="14.5" stroke="#cc0000" stroke-width="1.5"/>
+        <!-- Pashupati temple body -->
+        <rect x="38" y="46" width="24" height="28" rx="1" fill="#8B0000"/>
+        <!-- Temple tiered roof -->
+        <polygon points="50,28 30,48 70,48" fill="#8B0000"/>
+        <polygon points="50,34 34,48 66,48" fill="#a00000"/>
+        <polygon points="50,40 38,48 62,48" fill="#cc0000"/>
+        <!-- Temple door -->
+        <rect x="45" y="60" width="10" height="14" rx="1" fill="#fff" opacity="0.9"/>
+        <!-- Cow silhouette - left -->
+        <ellipse cx="22" cy="75" rx="9" ry="5" fill="#8B0000"/>
+        <rect x="19" y="76" width="3" height="6" rx="1" fill="#8B0000"/>
+        <rect x="24" y="76" width="3" height="6" rx="1" fill="#8B0000"/>
+        <circle cx="30" cy="73" r="3" fill="#8B0000"/>
+        <!-- Rhododendron flower - right -->
+        <circle cx="78" cy="75" r="7" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+        <circle cx="78" cy="75" r="3" fill="#cc0000"/>
+        <!-- Himalaya range bottom -->
+        <polyline points="10,90 20,78 30,85 42,70 50,77 58,68 70,78 80,72 90,80 90,95 10,95" fill="#8B0000" opacity="0.7"/>
+        <!-- Border text area -->
+        <text x="50" y="104" font-size="7" fill="#8B0000" text-anchor="middle" font-weight="bold" font-family="serif" letter-spacing="1">नेपाल सरकार</text>
+      </svg>
+    </div>
+    <div style="line-height:1.5;">
+     
+    </div>
+  </div>
+
+  <!-- CENTER: NEB Title Text -->
+  <div class="header-center">
+    <div class="gov-line">नेपाल सरकार</div>
+    <div class="nepali-main">राष्ट्रिय परीक्षा बोर्ड</div>
+    <div class="location-line">सानोठिमी, भक्तपुर</div>
+  </div>
+
+  <!-- RIGHT: Date + NEB Circular Emblem -->
+  <div class="header-right">
+    <div class="header-date-block">
+    </div>
+
+    <!-- ╔══════════════════════════════════════════════════╗
+         ║  LOGO CHANGE GUIDE — RIGHT SIDE (NEB Emblem)   ║
+         ║  To use a real NEB logo image:                  ║
+         ║  Replace <div class="neb-logo"> block with:     ║
+         ║  <img src="neb-logo.png" alt="NEB"              ║
+         ║       style="width:90px;height:90px">           ║
+         ╚══════════════════════════════════════════════════╝ -->
+    <img src="images/logo-right.png" style="width:80px;">
+      <!-- NEB Circular Emblem SVG — replace with actual logo image if available -->
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer circles -->
+        <circle cx="50" cy="50" r="48" fill="#003893" stroke="#c8a951" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#c8a951" stroke-width="1"/>
+        <circle cx="50" cy="50" r="36" fill="none" stroke="#c8a951" stroke-width="0.5" stroke-dasharray="2,3"/>
+        <!-- Open book symbol center -->
+        <rect x="22" y="35" width="24" height="32" rx="2" fill="#fff" opacity="0.92"/>
+        <rect x="50" y="35" width="24" height="32" rx="2" fill="#fff" opacity="0.78"/>
+        <line x1="46" y1="35" x2="46" y2="67" stroke="#c8a951" stroke-width="2.5"/>
+        <!-- Book binding lines -->
+        <line x1="26" y1="42" x2="42" y2="42" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <line x1="26" y1="48" x2="42" y2="48" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <line x1="26" y1="54" x2="42" y2="54" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <line x1="54" y1="42" x2="70" y2="42" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <line x1="54" y1="48" x2="70" y2="48" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <line x1="54" y1="54" x2="70" y2="54" stroke="#003893" stroke-width="1" opacity="0.4"/>
+        <!-- Stars arc top -->
+        <text x="28" y="30" font-size="7" fill="#c8a951" text-anchor="middle">★</text>
+        <text x="50" y="24" font-size="7" fill="#c8a951" text-anchor="middle">★</text>
+        <text x="72" y="30" font-size="7" fill="#c8a951" text-anchor="middle">★</text>
+        <!-- NEB text bottom arc -->
+        <path id="arcPath" d="M 15,60 A 36,36 0 0,0 85,60" fill="none"/>
+        <text font-size="9" fill="#c8a951" font-weight="bold" font-family="serif" letter-spacing="3">
+          <textPath href="#arcPath" startOffset="10%">NEB · NEPAL</textPath>
+        </text>
+        <!-- Outer border text -->
+        <path id="outerArc" d="M 8,55 A 44,44 0 1,1 92,55" fill="none"/>
+        <text font-size="5.5" fill="#c8a951" font-family="serif" letter-spacing="1.5">
+          <textPath href="#outerArc" startOffset="5%">राष्ट्रिय परीक्षा बोर्ड · NATIONAL EXAMINATION BOARD ·</textPath>
+        </text>
+      </svg>
+    </div>
+  </div>
+
+</header>
+
+<!-- NAV BAR -->
+<nav class="nav-bar">
+  <div class="nav-item"><a href="#" class="active"><span class="nav-home-icon">⌂</span></a></div>
+  <div class="nav-item"><a href="#">हाम्रोबारेमा <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">अभिलेखालय</a></div>
+  <div class="nav-item"><a href="#">रिजल्ट <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">ग्यालरी <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">मौजुदा कानुन <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">डाउनलोड <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">पदपूर्ति <span class="arrow">▾</span></a></div>
+  <div class="nav-item"><a href="#">Download Questions</a></div>
+  <div class="nav-item"><a href="#">Payment</a></div>
+  <div class="nav-item"><a href="#">सम्पर्क</a></div>
+  <div class="nav-item" style="margin-left:auto;">
+    <a href="#verify-section" class="nav-result-btn" onclick="smoothScroll()">▶ Result</a>
+  </div>
+</nav>
+
+<!-- NOTICE TICKER -->
+<div class="notice-bar">
+  <span class="notice-label">अपडेटहरु</span>
+  <div class="ticker-wrap">
+    <span class="notice-text">
+      कक्षा १२ को परीक्षा सञ्चालन सम्बन्धी विज्ञप्ति &nbsp;●&nbsp;
+      राष्ट्रिय परीक्षा बोर्ड, सानोठिमी, भक्तपुरको कम्प्युटर सहायक पदको स्थायी नियुक्ति सम्बन्धी सूचना &nbsp;●&nbsp;
+      Grade XII (Class 12) Examination Result 2080 is now available &nbsp;●&nbsp;
+      For certificate verification contact NEB: 01-6630740 &nbsp;●&nbsp;
+      Online Application for Grade XI (Class 11) is now open &nbsp;●&nbsp;
+      Official website: www.neb.gov.np
+    </span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT: HERO + SERVICES -->
+<div class="main-content">
+
+  <!-- HERO SLIDER -->
+  <div class="hero-section">
+    <!-- Slide 1: NEB Campus -->
+    <div class="slide active" id="slide-1">
+      <img class="slide-bg" src="images/slide2.jpg">" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sky -->
+        <defs>
+          <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#87CEEB"/>
+            <stop offset="60%" stop-color="#b8dff0"/>
+            <stop offset="100%" stop-color="#d4ecf7"/>
+          </linearGradient>
+          <linearGradient id="grass1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a8a3a"/>
+            <stop offset="100%" stop-color="#3d6b24"/>
+          </linearGradient>
+        </defs>
+        <rect width="700" height="380" fill="url(#sky1)"/>
+        <!-- Clouds -->
+        <ellipse cx="150" cy="60" rx="60" ry="22" fill="white" opacity="0.8"/>
+        <ellipse cx="190" cy="55" rx="50" ry="18" fill="white" opacity="0.9"/>
+        <ellipse cx="500" cy="80" rx="70" ry="24" fill="white" opacity="0.7"/>
+        <ellipse cx="550" cy="75" rx="55" ry="20" fill="white" opacity="0.85"/>
+        <!-- Mountains in bg -->
+        <polygon points="0,200 80,140 160,190 240,130 320,180 400,120 480,170 560,110 640,160 700,130 700,230 0,230" fill="#8aafcb" opacity="0.5"/>
+        <polygon points="0,210 100,160 200,200 300,150 400,185 500,145 600,175 700,155 700,240 0,240" fill="#b8cfe0" opacity="0.4"/>
+        <!-- Ground -->
+        <rect x="0" y="270" width="700" height="110" fill="url(#grass1)"/>
+        <!-- Path -->
+        <polygon points="330,270 370,270 390,380 310,380" fill="#c4a86a"/>
+        <!-- Main Building -->
+        <rect x="80" y="160" width="540" height="115" fill="#b85c38" rx="2"/>
+        <rect x="80" y="155" width="540" height="12" fill="#8b3a22" rx="1"/>
+        <!-- Windows row 1 -->
+        <rect x="100" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="140" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="180" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="220" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="420" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="460" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="500" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="540" y="170" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <!-- Windows row 2 -->
+        <rect x="100" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="140" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="180" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="220" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="420" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="460" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="500" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <rect x="540" y="210" width="30" height="25" fill="#d4e8f8" rx="1" opacity="0.9"/>
+        <!-- Center entrance -->
+        <rect x="305" y="195" width="90" height="80" fill="#7a3018" rx="2"/>
+        <rect x="322" y="200" width="26" height="50" fill="#d4a060" rx="1"/>
+        <rect x="352" y="200" width="26" height="50" fill="#d4a060" rx="1"/>
+        <!-- Flagpole -->
+        <line x1="350" y1="80" x2="350" y2="160" stroke="#666" stroke-width="3"/>
+        <polygon points="350,82 390,95 350,108" fill="#dc143c"/>
+        <polygon points="350,95 380,95" fill="#003893" opacity="0.7"/>
+        <!-- Trees -->
+        <ellipse cx="60" cy="245" rx="28" ry="35" fill="#3a7a28"/>
+        <rect x="56" y="265" width="8" height="20" fill="#5a3a1a"/>
+        <ellipse cx="640" cy="248" rx="25" ry="32" fill="#3a7a28"/>
+        <rect x="636" y="265" width="8" height="18" fill="#5a3a1a"/>
+        <ellipse cx="40" cy="255" rx="18" ry="22" fill="#4a8a34"/>
+        <ellipse cx="660" cy="255" rx="20" ry="25" fill="#4a8a34"/>
+        <!-- Overlay gradient for readability -->
+        <rect x="0" y="240" width="700" height="140" fill="url(#sky1)" opacity="0" />
+        <rect x="0" y="300" width="700" height="80" fill="#1a3060" opacity="0.6"/>
+      </svg>
+      <div class="slide-content">
+        <h2>राष्ट्रिय परीक्षा बोर्ड, सानोठिमी, भक्तपुर</h2>
+        <p>National Examination Board — Conducting national-level examinations since 2018 B.S.</p>
+      </div>
+    </div>
+
+    <!-- Slide 2: Exam Hall -->
+    <div class="slide" id="slide-2">
+      <img class="slide-bg" src="images/slide3.jpg"> src="images/slide1.jpg"> viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hallBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f5f0e8"/>
+            <stop offset="100%" stop-color="#e8dfc8"/>
+          </linearGradient>
+          <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e8d8c0"/>
+            <stop offset="100%" stop-color="#d4c4a8"/>
+          </linearGradient>
+        </defs>
+        <rect width="700" height="380" fill="url(#hallBg)"/>
+        <!-- Ceiling -->
+        <rect width="700" height="60" fill="#c8b890"/>
+        <!-- Beams -->
+        <rect x="0" y="55" width="700" height="8" fill="#a89060"/>
+        <rect x="160" y="0" width="8" height="380" fill="#b8a070" opacity="0.3"/>
+        <rect x="330" y="0" width="8" height="380" fill="#b8a070" opacity="0.3"/>
+        <rect x="500" y="0" width="8" height="380" fill="#b8a070" opacity="0.3"/>
+        <!-- Walls -->
+        <rect x="0" y="60" width="700" height="240" fill="url(#wallGrad)"/>
+        <!-- Blackboard -->
+        <rect x="200" y="75" width="300" height="100" fill="#2d5a2d" rx="2"/>
+        <rect x="205" y="80" width="290" height="90" fill="#356b35" rx="1"/>
+        <text x="350" y="132" font-size="14" fill="white" text-anchor="middle" opacity="0.9" font-family="serif">परीक्षा कक्षा | Examination Hall</text>
+        <!-- Desks rows -->
+        <!-- Row 1 -->
+        <rect x="80" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="175" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="270" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="365" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="460" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="555" y="185" width="55" height="35" fill="#c8a870" rx="3"/>
+        <!-- Row 2 -->
+        <rect x="80" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="175" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="270" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="365" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="460" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="555" y="240" width="55" height="35" fill="#c8a870" rx="3"/>
+        <!-- Row 3 -->
+        <rect x="80" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="175" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="270" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="365" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="460" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <rect x="555" y="295" width="55" height="35" fill="#c8a870" rx="3"/>
+        <!-- Floor -->
+        <rect x="0" y="335" width="700" height="45" fill="#a89060"/>
+        <!-- Overlay -->
+        <rect x="0" y="310" width="700" height="70" fill="#0a1840" opacity="0.55"/>
+      </svg>
+      <div class="slide-content">
+        <h2>परीक्षा सञ्चालन</h2>
+        <p>Conducting Grade XI &amp; XII national examinations with integrity and transparency</p>
+      </div>
+    </div>
+
+    <!-- Slide 3: Results/Graduation -->
+    <div class="slide" id="slide-3">
+      <img class="slide-bg" src="images/slide3.jpg"> viewBox="0 0 700 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradBg3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#001a60"/>
+            <stop offset="50%" stop-color="#003893"/>
+            <stop offset="100%" stop-color="#0051bb"/>
+          </linearGradient>
+        </defs>
+        <rect width="700" height="380" fill="url(#gradBg3)"/>
+        <!-- Stars -->
+        <circle cx="50" cy="40" r="1.5" fill="white" opacity="0.6"/>
+        <circle cx="120" cy="20" r="1" fill="white" opacity="0.5"/>
+        <circle cx="200" cy="55" r="2" fill="white" opacity="0.4"/>
+        <circle cx="600" cy="30" r="1.5" fill="white" opacity="0.7"/>
+        <circle cx="650" cy="60" r="1" fill="white" opacity="0.5"/>
+        <!-- Large seal/emblem bg -->
+        <circle cx="350" cy="190" r="120" fill="none" stroke="#c8a951" stroke-width="2" opacity="0.3"/>
+        <circle cx="350" cy="190" r="140" fill="none" stroke="#c8a951" stroke-width="1" opacity="0.15"/>
+        <!-- Certificate shape -->
+        <rect x="170" y="100" width="360" height="240" rx="6" fill="white" opacity="0.08"/>
+        <rect x="180" y="110" width="340" height="220" rx="4" fill="none" stroke="#c8a951" stroke-width="1.5" opacity="0.4"/>
+        <!-- Text on certificate -->
+        <text x="350" y="150" font-size="11" fill="#c8a951" text-anchor="middle" opacity="0.8" font-family="serif">राष्ट्रिय परीक्षा बोर्ड, नेपाल</text>
+        <text x="350" y="170" font-size="9" fill="white" text-anchor="middle" opacity="0.7" font-family="serif">National Examination Board, Nepal</text>
+        <rect x="210" y="178" width="280" height="1" fill="#c8a951" opacity="0.4"/>
+        <text x="350" y="200" font-size="14" fill="white" text-anchor="middle" opacity="0.9" font-weight="bold" font-family="serif">GRADE XII</text>
+        <text x="350" y="220" font-size="11" fill="#a8d0ff" text-anchor="middle" opacity="0.8" font-family="serif">TRANSCRIPT OF MARKS</text>
+        <rect x="240" y="228" width="220" height="40" fill="#c8a951" opacity="0.1" rx="2"/>
+        <text x="350" y="252" font-size="9" fill="#c8a951" text-anchor="middle" opacity="0.7">● ● ● ● ●</text>
+        <!-- Confetti dots -->
+        <circle cx="140" cy="130" r="5" fill="#dc143c" opacity="0.6"/>
+        <circle cx="560" cy="120" r="5" fill="#c8a951" opacity="0.6"/>
+        <circle cx="100" cy="200" r="4" fill="#a8d0ff" opacity="0.5"/>
+        <circle cx="600" cy="180" r="4" fill="#dc143c" opacity="0.5"/>
+        <!-- Overlay -->
+        <rect x="0" y="310" width="700" height="70" fill="#001030" opacity="0.6"/>
+      </svg>
+      <div class="slide-content">
+        <h2>नतिजा प्रकाशन २०८०</h2>
+        <p>Grade XII Examination Results 2080 — Now available for online verification</p>
+      </div>
+    </div>
+
+    <!-- Slider controls -->
+    <button class="slider-arrow slider-prev" onclick="changeSlide(-1)">❮</button>
+    <button class="slider-arrow slider-next" onclick="changeSlide(1)">❯</button>
+    <div class="slider-dots">
+      <div class="dot active" onclick="goSlide(0)"></div>
+      <div class="dot" onclick="goSlide(1)"></div>
+      <div class="dot" onclick="goSlide(2)"></div>
+    </div>
+  </div>
+
+  <!-- ONLINE SERVICES SIDEBAR -->
+  <div class="services-sidebar">
+    <div class="services-title">
+      <span class="services-nepali">अनलाईन सेवाहरु</span>
+      <small style="font-size:0.72rem; opacity:0.8; display:block; margin-top:2px;">Online Services</small>
+    </div>
+    <div class="services-grid">
+      <a class="service-item" href="#verify-section" onclick="smoothScroll()">
+        <div class="service-icon orange">📊</div>
+        <div class="service-label"><span class="nepali">नतिजा प्रकाशन</span>Result</div>
+      </a>
+      <a class="service-item" href="#">
+        <div class="service-icon blue">👥</div>
+        <div class="service-label"><span class="nepali">परीक्षा आवेदन फारम</span>Exam Form</div>
+      </a>
+      <a class="service-item" href="#">
+        <div class="service-icon purple">🌐</div>
+        <div class="service-label"><span class="nepali">अनलाईन रिजिष्ट्रेसन</span>Registration</div>
+      </a>
+      <a class="service-item" href="#">
+        <div class="service-icon green">⚖️</div>
+        <div class="service-label"><span class="nepali">मौजुदा कानुन</span>Laws</div>
+      </a>
+      <a class="service-item" href="#">
+        <div class="service-icon teal">📅</div>
+        <div class="service-label"><span class="nepali">कार्यतालिका</span>Calendar</div>
+      </a>
+      <a class="service-item" href="#">
+        <div class="service-icon red">🏢</div>
+        <div class="service-label"><span class="nepali">कार्यालयहरु</span>Offices</div>
+      </a>
+    </div>
+    <!-- Quick Notices in sidebar -->
+    <div style="padding:12px;">
+      <div style="font-size:0.7rem; font-weight:700; color:var(--blue-dark); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid var(--blue-pale);">📌 Quick Notices</div>
+      <div style="font-size:0.73rem; color:var(--text-light); line-height:1.7;">
+        <div style="margin-bottom:6px; padding-bottom:6px; border-bottom:1px solid #eef;">
+          <span style="color:var(--red); font-weight:700;">●</span>
+          <a href="#" style="color:var(--blue-dark); text-decoration:none; margin-left:5px;">Grade XII Result 2080 Published <span class="new-badge">NEW</span></a>
+        </div>
+        <div style="margin-bottom:6px; padding-bottom:6px; border-bottom:1px solid #eef;">
+          <span style="color:var(--red); font-weight:700;">●</span>
+          <a href="#" style="color:var(--blue-dark); text-decoration:none; margin-left:5px;">Exam Schedule 2081 Released</a>
+        </div>
+        <div style="margin-bottom:6px; padding-bottom:6px; border-bottom:1px solid #eef;">
+          <span style="color:var(--red); font-weight:700;">●</span>
+          <a href="#" style="color:var(--blue-dark); text-decoration:none; margin-left:5px;">Online Application Open: Class 11 <span class="new-badge">NEW</span></a>
+        </div>
+        <div style="margin-bottom:4px;">
+          <span style="color:var(--red); font-weight:700;">●</span>
+          <a href="#" style="color:var(--blue-dark); text-decoration:none; margin-left:5px;">Admit Card Download Available</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTICES SECTION -->
+<div class="notices-section" style="padding:14px 16px;">
+  <div class="notices-col">
+    <div class="notices-col-header">📋 सूचनाहरु | Notices</div>
+    <div class="notice-list">
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Grade XII Examination 2080 Result Published <span class="new-badge">NEW</span></div>
+          <div class="notice-date">2081 Baishakh 15</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Online Application for Grade XI (Class 11) now open</div>
+          <div class="notice-date">2081 Baishakh 10</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Revised exam schedule for Grade XII practical examination</div>
+          <div class="notice-date">2081 Chaitra 28</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>NEB invites applications for Computer Assistant position</div>
+          <div class="notice-date">2081 Chaitra 20</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="notices-col">
+    <div class="notices-col-header">📅 कार्यक्रमहरु | Events</div>
+    <div class="notice-list">
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Grade XI (Class 11) Examination begins <span class="new-badge">NEW</span></div>
+          <div class="notice-date">2081 Jestha 1</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Result re-checking application deadline</div>
+          <div class="notice-date">2081 Baishakh 25</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Annual academic calendar 2081-82 released</div>
+          <div class="notice-date">2081 Baishakh 01</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Curriculum revision committee meeting</div>
+          <div class="notice-date">2081 Chaitra 15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="notices-col">
+    <div class="notices-col-header">📥 डाउनलोडहरु | Downloads</div>
+    <div class="notice-list">
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Grade XII Question Paper 2080 - Science</div>
+          <div class="notice-date">PDF Download</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Grade XII Question Paper 2080 - Management</div>
+          <div class="notice-date">PDF Download</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>Exam Application Form 2081 (Grade XI)</div>
+          <div class="notice-date">PDF Form</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <span class="notice-bullet">●</span>
+        <div>
+          <div>NEB Annual Report 2079-80</div>
+          <div class="notice-date">PDF Report</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CERTIFICATE VERIFICATION SECTION -->
+<div class="verify-section" id="verify-section">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="#">Home</a> <span>›</span>
+    <a href="#">Results</a> <span>›</span>
+    <strong>Certificate / Result Verification</strong>
+  </div>
+
+  <div class="search-card">
+    <div class="verify-section-title">
+      <span style="background:rgba(255,255,255,0.15);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:0.9rem;">🔍</span>
+      Certificate / Result Verification — प्रमाणपत्र / नतिजा प्रमाणीकरण
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Symbol Number / Roll No.</label>
+          <input type="text" id="inp-roll" placeholder="e.g. 8002409" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" id="inp-dob">
+        </div>
+        <div class="form-group">
+          <label>Exam Year</label>
+          <input type="text" id="inp-year" placeholder="e.g. 2020" maxlength="4">
+        </div>
+        <button class="btn-verify" onclick="verifyResult()">🔍 VERIFY</button>
+      </div>
+      <p class="hint">
+        📌 <strong>Demo:</strong> Enter Symbol No. <strong>8002409</strong>, any DOB, Year <strong>2020</strong> to see sample result.
+      </p>
+      <div class="error-box" id="error-box">
+        ❌ No record found. Please check your Symbol Number, Date of Birth, and Exam Year and try again.
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT AREA -->
+  <div id="result-area">
+    <div class="result-sheet">
+      <div class="result-header">
+        <div class="rh-logos">
+          <div class="rh-logo-box">
+            <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="29" fill="#003893" stroke="#c8a951" stroke-width="2"/>
+              <circle cx="30" cy="30" r="24" fill="none" stroke="#c8a951" stroke-width="1"/>
+              <rect x="15" y="22" width="12" height="16" rx="1" fill="#fff" opacity="0.9"/>
+              <rect x="28" y="22" width="12" height="16" rx="1" fill="#fff" opacity="0.7"/>
+              <line x1="27" y1="22" x2="27" y2="38" stroke="#c8a951" stroke-width="1.5"/>
+              <text x="30" y="47" font-size="6" fill="#c8a951" text-anchor="middle" font-weight="bold" font-family="serif">NEB</text>
+              <text x="20" y="20" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
+              <text x="30" y="17" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
+              <text x="40" y="20" font-size="5" fill="#c8a951" text-anchor="middle">★</text>
+            </svg>
+          </div>
+        </div>
+        <div class="rh-center">
+          <div class="nepali">राष्ट्रिय परीक्षा बोर्ड, नेपाल</div>
+          <h2>National Examination Board, Nepal</h2>
+          <div class="exam-sub" id="rh-exam-title">Grade XII Examination Result — 2020</div>
+        </div>
+        <div class="rh-logos">
+          <div class="rh-logo-box">
+            <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="29" cy="29" r="28" fill="#003893" stroke="#c8a951" stroke-width="2"/>
+              <circle cx="29" cy="29" r="23" fill="none" stroke="#c8a951" stroke-width="0.8"/>
+              <rect x="23" y="26" width="12" height="15" rx="1" fill="#fff" opacity="0.85"/>
+              <polygon points="29,14 22,26 36,26" fill="#fff" opacity="0.9"/>
+              <polygon points="13,32 18,24 23,30 29,20 35,28 40,22 46,32" fill="none" stroke="#c8a951" stroke-width="1.2"/>
+              <text x="29" y="47" font-size="4.5" fill="#c8a951" text-anchor="middle" font-weight="bold" font-family="serif">NEPAL</text>
+              <text x="29" y="52" font-size="3.5" fill="#a8d0ff" text-anchor="middle" font-family="sans-serif">सरकार</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-body">
+        <div class="status-strip">
+          <span>🗓️ Verification Date: <strong id="verify-date"></strong></span>
+          <span class="verified-badge">✅ VERIFIED RECORD</span>
+          <span>Source: <strong>NEB Official Database</strong></span>
+        </div>
+
+        <div class="section-heading">📋 Candidate Details</div>
+        <table class="info-table">
+          <tr><td>Symbol No. / Roll No.</td><td>8002409</td></tr>
+          <tr><td>Candidate's Name</td><td>BIBEK AGRAHARI</td></tr>
+          <tr><td>Mother's Name</td><td>SUNITA AGRAHARI</td></tr>
+          <tr><td>Father's Name</td><td>GAUTAM PRASAD AGRAHARI</td></tr>
+          <tr><td>District / School Code</td><td>76 / 1034</td></tr>
+        </table>
+
+        <div class="section-heading">📊 Marks Details</div>
+        <table class="marks-table">
+          <thead>
+            <tr>
+              <th>SUBJECT</th>
+              <th>Practical (Pr)</th>
+              <th>Theory (Th)</th>
+              <th>Marks Obtained</th>
+              <th>Maximum Marks</th>
+            </tr>
+          </thead>
+          <tbody id="marks-tbody">
+            <tr><td>NEPALI</td><td>X</td><td>75</td><td>75</td><td>100</td></tr>
+            <tr><td>ENGLISH</td><td>X</td><td>71</td><td>71</td><td>100</td></tr>
+            <tr><td>PHYSICS</td><td>24</td><td>53</td><td>77</td><td>100</td></tr>
+            <tr><td>CHEMISTRY</td><td>21</td><td>52</td><td>73</td><td>100</td></tr>
+            <tr><td>MATHEMATICS</td><td>X</td><td>69</td><td>69</td><td>100</td></tr>
+            <tr><td>BIOLOGY</td><td>20</td><td>58</td><td>78</td><td>100</td></tr>
+            <tr class="total-row"><td colspan="3">Marks Obtained / Maximum Marks</td><td>443</td><td>600</td></tr>
+          </tbody>
+        </table>
+
+        <div class="result-banner">
+          <div class="pass-text" id="res-status">✅ PASS</div>
+          <div class="div-text" id="res-div">FIRST DIVISION</div>
+          <div class="pct-text" id="res-pct">Percentage: 73.83%</div>
+        </div>
+
+        <div class="disclaimer">
+          <h4>⚠️ Important Notice / Disclaimer</h4>
+          <ol>
+            <li>This is a Computer Generated Provisional Score Card. The results published on this portal are for immediate information to examinees only. These cannot be treated as original mark sheets. Original mark sheets are issued by NEB separately.</li>
+            <li>Data provided by National Examination Board (NEB), Sanothimi, Bhaktapur, Nepal.</li>
+            <li>Neither the National Examination Board nor the service provider is responsible for any inadvertent error in the result published on this portal. Students are advised to contact NEB for any discrepancy.</li>
+            <li>For official verification, contact NEB at: <strong>01-6630740</strong> | Email: <strong>info@neb.gov.np</strong></li>
+          </ol>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-col">
+      <h4>📍 Contact Us</h4>
+      <p>National Examination Board (NEB)</p>
+      <p>Sanothimi, Bhaktapur, Nepal</p>
+      <p>📞 01-7630947 / 018620737</p>
+      <p>✉️ info@neb.gov.np</p>
+      <p>🌐 www.neb.gov.np</p>
+    </div>
+    <div class="footer-col">
+      <h4>🔗 Quick Links</h4>
+      <a href="#">Result Verification</a>
+      <a href="#">Online Application</a>
+      <a href="#">Download Questions</a>
+      <a href="#">Academic Calendar</a>
+      <a href="#">Annual Report</a>
+    </div>
+    <div class="footer-col">
+      <h4>📚 Resources</h4>
+      <a href="#">Curriculum</a>
+      <a href="#">Examination Guidelines</a>
+      <a href="#">Previous Question Papers</a>
+      <a href="#">Grading System</a>
+      <a href="#">School List</a>
+    </div>
+    <div class="footer-col">
+      <h4>🏛️ About NEB</h4>
+      <a href="#">About Us</a>
+      <a href="#">Board Members</a>
+      <a href="#">Organizational Structure</a>
+      <a href="#">Acts & Regulations</a>
+      <a href="#">Gallery</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2081 B.S. (2024 A.D.) <strong>National Examination Board, Government of Nepal.</strong> All rights reserved. &nbsp;|&nbsp;
+    Developed by: NEB IT Unit &nbsp;|&nbsp;
+    <a href="#" style="color:#4a7ab8; text-decoration:none;">Privacy Policy</a> &nbsp;|&nbsp;
+    <a href="#" style="color:#4a7ab8; text-decoration:none;">Disclaimer</a>
+  </div>
+</footer>
+
+<script>
+// ── Slider ──
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let autoPlay = setInterval(() => changeSlide(1), 4500);
+
+function changeSlide(dir) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + dir + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+function goSlide(i) {
+  clearInterval(autoPlay);
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = i;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+  autoPlay = setInterval(() => changeSlide(1), 4500);
+}
+
+// ── Smooth scroll ──
+function smoothScroll() {
+  setTimeout(() => document.getElementById('verify-section').scrollIntoView({ behavior: 'smooth' }), 50);
+}
+
+// ── Set today's date ──
+document.getElementById('verify-date').textContent = new Date().toLocaleDateString('en-NP', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// ── Demo Database ──
+const DB = [
+  {
+    roll: "8002409", year: "2020",
+    name: "BIBEK AGRAHARI",
+    mother: "SUNITA AGRAHARI",
+    father: "GAUTAM PRASAD AGRAHARI",
+    district: "76 / 1034",
+    subjects: [
+      { name: "NEPALI",      pr: "X",  th: 75, total: 75,  max: 100 },
+      { name: "ENGLISH",     pr: "X",  th: 71, total: 71,  max: 100 },
+      { name: "PHYSICS",     pr: 24,   th: 53, total: 77,  max: 100 },
+      { name: "CHEMISTRY",   pr: 21,   th: 52, total: 73,  max: 100 },
+      { name: "MATHEMATICS", pr: "X",  th: 69, total: 69,  max: 100 },
+      { name: "BIOLOGY",     pr: 20,   th: 58, total: 78,  max: 100 },
+    ],
+    obtained: 443, maximum: 600,
+    result: "PASS", division: "FIRST DIVISION",
+    examTitle: "GRADE XII EXAMINATION RESULT — 2020"
+  }
+];
+
+<script>
+let roll, year, errorBox, resultArea;
+
+// 🔘 Button call करेगा यही
+function verifyResult() {
+  roll = document.getElementById('inp-roll').value.trim();
+  year = document.getElementById('inp-year').value.trim();
+
+  errorBox = document.getElementById('error-box');
+  resultArea = document.getElementById('result-area');
+
+  errorBox.style.display = 'none';
+  resultArea.style.display = 'none';
+
+  loadData(); // 👈 API call
+}
+
+// ✅ JSONP call (CORS bypass)
+function loadData() {
+  const script = document.createElement('script');
+  script.src = "https://script.google.com/macros/s/AKfycbwgcfynT7DZN_UM0QVW2SwgcWceLhnOQxSpQVxuqAhh9n46e_fV6MwpzCfrAjuidCc6lA/exec?callback=handleData";
+  document.body.appendChild(script);
+}
+
+// ✅ API response यहाँ आएगा
+function handleData(data) {
+  const student = data.find(s => 
+    String(s.symbol) === String(roll) &&
+    String(s.year) === String(year)
+  );
+
+  if (!student) {
+    errorBox.style.display = 'block';
+    return;
+  }
+
+  renderResult(student);
+  resultArea.style.display = 'block';
+}
+
+// ✅ Result render
+function renderResult(s) {
+  document.querySelector('.info-table').innerHTML = `
+    <tr><td>Symbol No. / Roll No.</td><td>${s.symbol}</td></tr>
+    <tr><td>Candidate's Name</td><td>${s.name}</td></tr>
+    <tr><td>School</td><td>${s.school}</td></tr>
+    <tr><td>GPA XI</td><td>${s.gpa_xi}</td></tr>
+    <tr><td>GPA XII</td><td>${s.gpa_xii}</td></tr>
+    <tr><td>CGPA</td><td>${s.cgpa}</td></tr>
+  `;
+
+  // subjects split
+  const subjects = s.subjects_xii.split("|");
+  const grades = s.grades_xii.split("|");
+
+  let rows = subjects.map((sub, i) => `
+    <tr>
+      <td>${sub}</td>
+      <td>${grades[i] || '-'}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('marks-tbody').innerHTML = rows;
+
+  document.getElementById('res-status').innerHTML = `✅ PASS`;
+  document.getElementById('res-div').textContent = `CGPA: ${s.cgpa}`;
+  document.getElementById('res-pct').textContent = `GPA XII: ${s.gpa_xii}`;
+  document.getElementById('rh-exam-title').textContent = "GRADE XII RESULT";
+  document.getElementById('verify-date').textContent = new Date().toLocaleDateString();
+}
+</script>
+
+</body>
+</html>
