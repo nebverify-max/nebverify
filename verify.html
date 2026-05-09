@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>NEB Certificate Verification</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+/* HEADER */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: #fff;
+}
+
+/* LEFT */
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 45px;
+  margin-right: 10px;
+}
+
+.gov-text {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+/* CENTER */
+.center-title {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* RIGHT */
+.right-section {
+  display: flex;
+  align-items: center;
+}
+
+.right-section a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.login-btn {
+  background: #2f5dab;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* BLUE BAR */
+.blue-bar {
+  background: #2f5dab;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+/* MAIN */
+.container {
+  padding: 30px;
+  text-align: center;
+}
+
+/* CERT BOX */
+.cert-box {
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  max-width: 600px;
+}
+
+.cert-box img {
+  width: 100%;
+}
+
+/* BUTTON */
+.download-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #2f5dab;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP HEADER -->
+<div class="top-header">
+
+  <div class="left-section">
+    <img src="logo.png" class="logo">
+
+    <div class="gov-text">
+      <div>Government of Nepal</div>
+      <div>Ministry of Education, Science and Technology</div>
+      <div>Curriculum Development Centre, LOE</div>
+    </div>
+  </div>
+
+  <div class="center-title">
+    Online System for Issuance of Letter of Equivalence
+  </div>
+
+  <div class="right-section">
+    <a href="#">Help</a>
+    <a href="#">Notice</a>
+    <a href="#">FAQ</a>
+    <button class="login-btn">🔒 Login</button>
+  </div>
+
+</div>
+
+<!-- BLUE BAR -->
+<div class="blue-bar">
+  ← Go Back
+</div>
+
+<!-- MAIN -->
+<div class="container" id="main"></div>
+
+<script>
+const STUDENTS = {
+
+  // ── STUDENT 1 ──
+  "Mohammadjaved": {
+    jpg: "certificates/Mohammadjaved.jpg",
+    pdf: "certificates/Mohammadjaved.pdf"
+  },
+
+  // ── STUDENT 2 ──
+  "Bibek": {
+    jpg: "certificates/Bibek.jpg",
+    pdf: "certificates/Bibek.pdf"
+  },
+
+  // ── STUDENT 3 ──
+  "Student3": {
+    jpg: "certificates/Student3.jpg",
+    pdf: "certificates/Student3.pdf"
+  },
+
+  // ── STUDENT 4 ──
+  "Student4": {
+    jpg: "certificates/Student4.jpg",
+    pdf: "certificates/Student4.pdf"
+  },
+
+  // ── STUDENT 5 ──
+  "Student5": {
+    jpg: "certificates/Student5.jpg",
+    pdf: "certificates/Student5.pdf"
+  },
+
+  // ── STUDENT 6 ──
+  "Student6": {
+    jpg: "certificates/Student6.jpg",
+    pdf: "certificates/Student6.pdf"
+  },
+
+  // ── STUDENT 7 ──
+  "Student7": {
+    jpg: "certificates/Student7.jpg",
+    pdf: "certificates/Student7.pdf"
+  },
+
+  // ── STUDENT 8 ──
+  "Student8": {
+    jpg: "certificates/Student8.jpg",
+    pdf: "certificates/Student8.pdf"
+  },
+
+  // ── STUDENT 9 ──
+  "Student9": {
+    jpg: "certificates/Student9.jpg",
+    pdf: "certificates/Student9.pdf"
+  },
+
+  // ── STUDENT 10 ──
+  "Student10": {
+    jpg: "certificates/Student10.jpg",
+    pdf: "certificates/Student10.pdf"
+  },
+
+  // ── STUDENT 11 ──
+  "Student11": {
+    jpg: "certificates/Student11.jpg",
+    pdf: "certificates/Student11.pdf"
+  },
+
+  // ── STUDENT 12 ──
+  "Student12": {
+    jpg: "certificates/Student12.jpg",
+    pdf: "certificates/Student12.pdf"
+  },
+
+  // ── STUDENT 13 ──
+  "Student13": {
+    jpg: "certificates/Student13.jpg",
+    pdf: "certificates/Student13.pdf"
+  },
+
+  // ── STUDENT 14 ──
+  "Student14": {
+    jpg: "certificates/Student14.jpg",
+    pdf: "certificates/Student14.pdf"
+  },
+
+  // ── STUDENT 15 ──
+  "Student15": {
+    jpg: "certificates/Student15.jpg",
+    pdf: "certificates/Student15.pdf"
+  },
+
+  // ── STUDENT 16 ──
+  "Student16": {
+    jpg: "certificates/Student16.jpg",
+    pdf: "certificates/Student16.pdf"
+  },
+
+  // ── STUDENT 17 ──
+  "Student17": {
+    jpg: "certificates/Student17.jpg",
+    pdf: "certificates/Student17.pdf"
+  },
+
+  // ── STUDENT 18 ──
+  "Student18": {
+    jpg: "certificates/Student18.jpg",
+    pdf: "certificates/Student18.pdf"
+  },
+
+  // ── STUDENT 19 ──
+  "Student19": {
+    jpg: "certificates/Student19.jpg",
+    pdf: "certificates/Student19.pdf"
+  },
+
+  // ── STUDENT 20 ──
+  "Student20": {
+    jpg: "certificates/Student20.jpg",
+    pdf: "certificates/Student20.pdf"
+  }
+
+};
+
+// URL se ?id= padho
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const main = document.getElementById("main");
+
+const key = id
+  ? Object.keys(STUDENTS).find(k => k.toLowerCase() === id.toLowerCase())
+  : null;
+
+if (key) {
+  const s = STUDENTS[key];
+  main.innerHTML =
+    '<h2>Certificate ID: ' + key + '</h2>' +
+    '<div class="cert-box">' +
+      '<img src="' + s.jpg + '">' +
+      '<br>' +
+      '<a href="' + s.pdf + '" download>' +
+        '<button class="download-btn">Download Certificate</button>' +
+      '</a>' +
+    '</div>';
+} else if (id) {
+  main.innerHTML = '<h2>Certificate not found for ID: ' + id + '</h2>';
+} else {
+  main.innerHTML = '<h2>No certificate ID provided.</h2><p>QR code scan karein.</p>';
+}
+</script>
+
+</body>
+</html>
