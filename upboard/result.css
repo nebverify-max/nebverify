@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #000;
+    padding: 40px 20px;
+}
+
+.scorecard-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.scorecard {
+    background-color: #fff;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.header {
+    background-color: #900d0d; /* Dark red */
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+}
+
+.header .logo {
+    height: 65px;
+    margin-right: 20px;
+}
+
+.header h1 {
+    font-size: 26px;
+    font-weight: normal;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.sub-header {
+    background-color: #f7f7f7;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #111;
+}
+
+.section {
+    padding: 0;
+}
+
+.section-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #000;
+    text-transform: uppercase;
+}
+
+/* Candidate details styles */
+.details-row {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.details-label {
+    width: 35%;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #222;
+}
+
+.details-value {
+    width: 65%;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #000;
+}
+
+/* Marks table styles */
+.marks-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.marks-table th, .marks-table td {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.marks-table th {
+    font-weight: bold;
+    color: #000;
+}
+
+.align-left {
+    text-align: left !important;
+}
+
+/* Result row styles */
+.result-row {
+    display: flex;
+    padding: 12px 20px;
+    font-size: 14px;
+}
+
+.result-label {
+    width: calc(35% - 20px); /* Adjusting to align nicely with SUBJECT considering padding */
+}
+
+.result-value {
+    width: 65%;
+}
+
+.green-bar {
+    height: 8px;
+    background-color: #a3cc72; /* Light green bar matching image */
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Disclaimer styles */
+.disclaimer-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    counter-reset: disclaimer-counter;
+}
+
+.disclaimer-list li {
+    padding: 12px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #111;
+    display: flex;
+}
+
+.disclaimer-list li::before {
+    counter-increment: disclaimer-counter;
+    content: counter(disclaimer-counter) ". ";
+    margin-right: 8px;
+    font-weight: normal;
+    min-width: 15px;
+}
+
+.disclaimer-list li:last-child {
+    border-bottom: none;
+}
+
+@media print {
+    body {
+        background-color: #fff;
+        padding: 0;
+    }
+    .action-bar {
+        display: none !important;
+    }
+    .scorecard {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
